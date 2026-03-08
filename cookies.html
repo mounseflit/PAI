@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>PocketAI — Cookie Policy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    :root {
+      --black: #000;
+      --c1: #070707;
+      --c2: #0e0e0e;
+      --c3: #161616;
+      --c4: #1c1c1c;
+      --forest: #01693F;
+      --em: #1AB670;
+      --em2: #10B981;
+      --em-lt: #1EAA73;
+      --sage: #008851;
+      --white: #fff;
+      --w2: #e8e8e8;
+      --gray: #9ca3af;
+      --gray-d: #5a5f6b;
+      --gray-f: #252525;
+      --glow: rgba(26, 182, 112, .16);
+      --glow-s: rgba(26, 182, 112, .06);
+      --gl: rgba(255, 255, 255, .025);
+      --gl-h: rgba(255, 255, 255, .045);
+      --gl-b: rgba(255, 255, 255, .06);
+      --gl-b2: rgba(255, 255, 255, .1);
+      --r: 14px;
+      --rl: 22px;
+      --fh: 'Montserrat', sans-serif;
+      --fb: 'Montserrat', sans-serif;
+      --fm: 'JetBrains Mono', monospace
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--fb);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: .035
+    }
+
+    body::after {
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px
+    }
+
+    a {
+      color: var(--em);
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    a:hover {
+      color: var(--em-lt)
+    }
+
+    ::selection {
+      background: var(--glow);
+      color: var(--white)
+    }
+
+    /* Cursor */
+    .cur,
+    .cur-d {
+      position: fixed;
+      pointer-events: none;
+      z-index: 100000;
+      border-radius: 50%;
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -50%)
+    }
+
+    .cur {
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid var(--em);
+      transition: width .25s, height .25s, border-color .25s;
+      mix-blend-mode: difference
+    }
+
+    .cur.h {
+      width: 52px;
+      height: 52px;
+      border-color: var(--em2)
+    }
+
+    .cur-d {
+      width: 5px;
+      height: 5px;
+      background: var(--em);
+      transition: opacity .2s
+    }
+
+    @media(max-width:1024px) {
+
+      .cur,
+      .cur-d {
+        display: none !important
+      }
+    }
+
+    /* Blobs */
+    .bl {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: 0;
+      pointer-events: none;
+      will-change: transform
+    }
+
+    .bl-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(26, 182, 112, .12), transparent 70%);
+      top: -10%;
+      left: -10%
+    }
+
+    .bl-2 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(1, 105, 63, .1), transparent 70%);
+      top: 40%;
+      right: -8%
+    }
+
+    .bl-3 {
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(0, 136, 81, .08), transparent 70%);
+      bottom: -5%;
+      left: 30%
+    }
+
+    /* Nav */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10000;
+      padding: 18px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all .4s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .nav.scrolled {
+      background: rgba(7, 7, 7, .82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--gl-b);
+      padding: 12px 48px
+    }
+
+    .logo {
+      font-family: var(--fh);
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: -.03em;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 2px
+    }
+
+    .logo em {
+      font-style: normal;
+      color: var(--em);
+      font-weight: 800
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px
+    }
+
+    .nav-links a {
+      color: var(--gray);
+      font-size: .875rem;
+      font-weight: 500;
+      transition: color .25s;
+      letter-spacing: -.01em
+    }
+
+    .nav-links a:hover {
+      color: var(--white)
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--fb);
+      font-weight: 600;
+      font-size: .875rem;
+      padding: 10px 24px;
+      border-radius: var(--r);
+      cursor: pointer;
+      transition: all .3s cubic-bezier(.4, 0, .2, 1);
+      border: none;
+      letter-spacing: -.01em;
+      text-decoration: none
+    }
+
+    .btn-p {
+      background: var(--em);
+      color: var(--black);
+      box-shadow: 0 0 20px var(--glow)
+    }
+
+    .btn-p:hover {
+      background: var(--em-lt);
+      box-shadow: 0 0 30px var(--glow);
+      transform: translateY(-1px)
+    }
+
+    .btn-g {
+      background: transparent;
+      color: var(--em);
+      border: 1.5px solid var(--em)
+    }
+
+    .btn-g:hover {
+      background: var(--em);
+      color: var(--black);
+      box-shadow: 0 0 25px var(--glow)
+    }
+
+    .btn-sm {
+      padding: 8px 18px;
+      font-size: .8rem
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 10001;
+      background: none;
+      border: none;
+      padding: 4px
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all .3s
+    }
+
+    /* Reveal */
+    .rv {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .7s cubic-bezier(.4, 0, .2, 1), transform .7s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .rv.vis {
+      opacity: 1;
+      transform: none
+    }
+
+    .d1 {
+      transition-delay: .1s
+    }
+
+    .d2 {
+      transition-delay: .2s
+    }
+
+    .d3 {
+      transition-delay: .3s
+    }
+
+    .d4 {
+      transition-delay: .4s
+    }
+
+    .d5 {
+      transition-delay: .5s
+    }
+
+    /* Page Hero */
+    .page-hero {
+      position: relative;
+      padding: 180px 48px 80px;
+      text-align: center;
+      overflow: hidden
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(26, 182, 112, .08) 0%, transparent 65%);
+      pointer-events: none
+    }
+
+    .page-hero h1 {
+      font-family: var(--fh);
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 800;
+      letter-spacing: -.04em;
+      line-height: 1.1;
+      margin-bottom: 16px
+    }
+
+    .page-hero h1 span {
+      background: linear-gradient(135deg, var(--em), var(--em2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text
+    }
+
+    .page-hero .updated {
+      font-family: var(--fm);
+      font-size: .85rem;
+      color: var(--gray);
+      letter-spacing: .02em
+    }
+
+    /* Legal Content */
+    .legal-wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 48px 100px
+    }
+
+    .legal-card {
+      background: rgba(14, 14, 14, .55);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--gl-b);
+      border-radius: var(--rl);
+      padding: 56px 64px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, .3)
+    }
+
+    .legal-card h3 {
+      font-family: var(--fh);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--white);
+      margin: 40px 0 16px;
+      letter-spacing: -.02em;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--gl-b)
+    }
+
+    .legal-card h3:first-child {
+      margin-top: 0
+    }
+
+    .legal-card p {
+      color: var(--gray);
+      font-size: .935rem;
+      margin-bottom: 16px;
+      line-height: 1.8
+    }
+
+    .legal-card ul {
+      color: var(--gray);
+      font-size: .935rem;
+      margin: 0 0 16px 24px;
+      line-height: 1.9
+    }
+
+    .legal-card li {
+      margin-bottom: 6px
+    }
+
+    .legal-card strong {
+      color: var(--w2);
+      font-weight: 600
+    }
+
+    .legal-card a {
+      color: var(--em);
+      text-decoration: underline;
+      text-underline-offset: 3px
+    }
+
+    .legal-card .highlight-box {
+      background: var(--glow-s);
+      border: 1px solid rgba(26, 182, 112, .15);
+      border-radius: var(--r);
+      padding: 20px 24px;
+      margin: 20px 0;
+      color: var(--w2);
+      font-size: .92rem
+    }
+
+    .legal-card .highlight-box svg {
+      vertical-align: middle;
+      margin-right: 8px
+    }
+
+    /* Cookie Table */
+    .cookie-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: .9rem
+    }
+
+    .cookie-table th {
+      text-align: left;
+      padding: 12px 16px;
+      background: var(--c3);
+      color: var(--white);
+      font-weight: 600;
+      font-family: var(--fh);
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      border-bottom: 1px solid var(--gl-b2)
+    }
+
+    .cookie-table th:first-child {
+      border-radius: var(--r) 0 0 0
+    }
+
+    .cookie-table th:last-child {
+      border-radius: 0 var(--r) 0 0
+    }
+
+    .cookie-table td {
+      padding: 12px 16px;
+      color: var(--gray);
+      border-bottom: 1px solid var(--gl);
+      vertical-align: top
+    }
+
+    .cookie-table tr:last-child td {
+      border-bottom: none
+    }
+
+    .cookie-table .ck-name {
+      color: var(--w2);
+      font-family: var(--fm);
+      font-size: .82rem
+    }
+
+    .cookie-table .ck-type {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .02em
+    }
+
+    .ck-essential {
+      background: rgba(26, 182, 112, .12);
+      color: var(--em)
+    }
+
+    .ck-analytics {
+      background: rgba(59, 130, 246, .12);
+      color: #60a5fa
+    }
+
+    .ck-preferences {
+      background: rgba(168, 85, 247, .12);
+      color: #c084fc
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--gl-b);
+      padding: 72px 48px 32px;
+      position: relative;
+      z-index: 2
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr repeat(3, 1fr) 1.3fr;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto
+    }
+
+    .footer-brand p {
+      color: var(--gray);
+      font-size: .85rem;
+      line-height: 1.7;
+      margin: 16px 0
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px
+    }
+
+    .footer-social a {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--gl-b2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .3s;
+      color: var(--gray)
+    }
+
+    .footer-social a:hover {
+      border-color: var(--em);
+      color: var(--em);
+      background: var(--glow-s)
+    }
+
+    .footer-social a svg {
+      width: 16px;
+      height: 16px
+    }
+
+    .footer-col h4 {
+      font-family: var(--fh);
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--white);
+      margin-bottom: 18px
+    }
+
+    .footer-col a {
+      display: block;
+      color: var(--gray);
+      font-size: .85rem;
+      margin-bottom: 10px;
+      transition: color .2s
+    }
+
+    .footer-col a:hover {
+      color: var(--em)
+    }
+
+    .nl-input {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px
+    }
+
+    .nl-input input {
+      flex: 1;
+      background: var(--c3);
+      border: 1px solid var(--gl-b2);
+      border-radius: var(--r);
+      padding: 10px 14px;
+      color: var(--white);
+      font-family: var(--fb);
+      font-size: .85rem;
+      outline: none;
+      transition: border-color .3s
+    }
+
+    .nl-input input::placeholder {
+      color: var(--gray-d)
+    }
+
+    .nl-input input:focus {
+      border-color: var(--em)
+    }
+
+    .nl-input button {
+      padding: 10px 16px;
+      background: var(--em);
+      border: none;
+      border-radius: var(--r);
+      cursor: pointer;
+      transition: background .3s;
+      display: flex;
+      align-items: center
+    }
+
+    .nl-input button:hover {
+      background: var(--em-lt)
+    }
+
+    .nl-input button svg {
+      width: 16px;
+      height: 16px
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 48px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid var(--gl-b);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px
+    }
+
+    .footer-bottom p {
+      color: var(--gray-d);
+      font-size: .78rem
+    }
+
+    .footer-bottom .f-links {
+      display: flex;
+      gap: 20px
+    }
+
+    .footer-bottom .f-links a {
+      color: var(--gray-d);
+      font-size: .78rem;
+      transition: color .2s
+    }
+
+    .footer-bottom .f-links a:hover {
+      color: var(--em)
+    }
+
+    /* Mobile */
+    @media(max-width:1024px) {
+      .nav {
+        padding: 16px 28px
+      }
+
+      .nav.scrolled {
+        padding: 12px 28px
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background: rgba(7, 7, 7, .96);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        justify-content: center;
+        gap: 24px;
+        padding: 40px;
+        transition: right .35s cubic-bezier(.4, 0, .2, 1);
+        border-left: 1px solid var(--gl-b)
+      }
+
+      .nav-links.open {
+        right: 0
+      }
+
+      .hamburger {
+        display: flex
+      }
+
+      .page-hero {
+        padding: 140px 24px 60px
+      }
+
+      .legal-wrap {
+        padding: 0 24px 80px
+      }
+
+      .legal-card {
+        padding: 36px 32px
+      }
+
+      .cookie-table {
+        display: block;
+        overflow-x: auto
+      }
+
+      .footer {
+        padding: 48px 24px 24px
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px
+      }
+    }
+
+    @media(max-width:768px) {
+      .footer-grid {
+        grid-template-columns: 1fr
+      }
+
+      .legal-card {
+        padding: 28px 22px
+      }
+    }
+
+    @media(max-width:480px) {
+      .page-hero h1 {
+        font-size: 2rem
+      }
+
+      .legal-card {
+        padding: 24px 18px;
+        border-radius: var(--r)
+      }
+
+      .nl-input {
+        flex-direction: column
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Cursor -->
+  <div class="cur" id="cur"></div>
+  <div class="cur-d" id="curD"></div>
+
+  <!-- Blobs -->
+  <div class="bl bl-1"></div>
+  <div class="bl bl-2"></div>
+  <div class="bl bl-3"></div>
+
+  <!-- Nav -->
+  <nav class="nav" id="nav">
+    <a href="index.html" class="logo">Pocket<em>AI</em></a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#how">How It Works</a>
+      <a href="index.html#solutions">Solutions</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="pitch.html">Pitch</a>
+      <a href="index.html#get-started" class="btn btn-g btn-sm">Get Started</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <h1 class="rv"><span>Cookie Policy</span></h1>
+    <p class="updated rv d1">Last Updated: March 1, 2026</p>
+  </section>
+
+  <!-- Legal Content -->
+  <div class="legal-wrap">
+    <div class="legal-card rv d2">
+
+      <h3>1. What Are Cookies</h3>
+      <p>Cookies are small text files that are stored on your device (computer, tablet, or mobile phone) when you visit
+        a website. They are widely used to make websites function properly, improve user experience, and provide
+        information to site owners. Cookies can be "persistent" (remaining on your device until they expire or are
+        deleted) or "session-based" (deleted when you close your browser).</p>
+      <p>This Cookie Policy explains how PocketAI Technologies ("PocketAI," "we," "our," or "us") uses cookies and
+        similar tracking technologies on our website at pai-technology.com and related web services (the "Website").
+        This policy should be read alongside our <a href="privacy.html">Privacy Policy</a>, which provides further
+        details on how we handle your personal data.</p>
+
+      <h3>2. How We Use Cookies</h3>
+      <p>We use cookies on our Website for several purposes:</p>
+      <ul>
+        <li><strong>Essential Operations:</strong> To enable core website functionality, such as maintaining your
+          session when you log in, processing secure transactions, and remembering your cookie consent preferences.</li>
+        <li><strong>Performance & Analytics:</strong> To understand how visitors interact with our Website, which pages
+          are visited most frequently, and to identify areas for improvement. This data is collected in an aggregated,
+          anonymized form.</li>
+        <li><strong>User Preferences:</strong> To remember choices you make (such as language preference, theme
+          settings, or region) to provide a more personalized experience on subsequent visits.</li>
+      </ul>
+      <div class="highlight-box">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1AB670" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+          <line x1="8" y1="21" x2="16" y2="21" />
+          <line x1="12" y1="17" x2="12" y2="21" />
+        </svg>
+        <strong>PocketAI Mobile App:</strong> The PocketAI mobile application uses minimal cookies and tracking
+        technologies due to its on-device processing architecture. The app does not use third-party advertising cookies.
+        Local storage on your device is managed entirely by you and is not transmitted to our servers unless you
+        explicitly opt in to cloud features.
+      </div>
+
+      <h3>3. Types of Cookies We Use</h3>
+      <p>Below is a detailed breakdown of the cookies used on our Website, organized by category:</p>
+
+      <p><strong>Essential Cookies</strong></p>
+      <p>These cookies are strictly necessary for the Website to function and cannot be switched off in our systems.
+        They are typically set in response to actions you take, such as logging in, filling in forms, or setting privacy
+        preferences.</p>
+      <table class="cookie-table">
+        <thead>
+          <tr>
+            <th>Cookie</th>
+            <th>Purpose</th>
+            <th>Duration</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="ck-name">pai_session</td>
+            <td>Maintains your authenticated session across pages</td>
+            <td>Session</td>
+            <td><span class="ck-type ck-essential">Essential</span></td>
+          </tr>
+          <tr>
+            <td class="ck-name">pai_csrf</td>
+            <td>Provides cross-site request forgery protection for form submissions</td>
+            <td>Session</td>
+            <td><span class="ck-type ck-essential">Essential</span></td>
+          </tr>
+          <tr>
+            <td class="ck-name">pai_consent</td>
+            <td>Stores your cookie consent preferences</td>
+            <td>12 months</td>
+            <td><span class="ck-type ck-essential">Essential</span></td>
+          </tr>
+          <tr>
+            <td class="ck-name">pai_cc</td>
+            <td>Identifies your preferred currency for pricing display</td>
+            <td>30 days</td>
+            <td><span class="ck-type ck-essential">Essential</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>Analytics Cookies</strong></p>
+      <p>These cookies help us understand how visitors interact with our Website by collecting and reporting anonymized,
+        aggregated information. We use privacy-focused analytics that do not track individual users across sites.</p>
+      <table class="cookie-table">
+        <thead>
+          <tr>
+            <th>Cookie</th>
+            <th>Purpose</th>
+            <th>Duration</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="ck-name">pai_analytics</td>
+            <td>Collects anonymized usage statistics (page views, session duration, referral source)</td>
+            <td>12 months</td>
+            <td><span class="ck-type ck-analytics">Analytics</span></td>
+          </tr>
+          <tr>
+            <td class="ck-name">pai_ab</td>
+            <td>Assigns you to A/B test groups for UI and feature experiments</td>
+            <td>90 days</td>
+            <td><span class="ck-type ck-analytics">Analytics</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>Preference Cookies</strong></p>
+      <p>These cookies allow the Website to remember choices you make and provide enhanced, more personalized features.
+      </p>
+      <table class="cookie-table">
+        <thead>
+          <tr>
+            <th>Cookie</th>
+            <th>Purpose</th>
+            <th>Duration</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="ck-name">pai_lang</td>
+            <td>Remembers your preferred language setting</td>
+            <td>12 months</td>
+            <td><span class="ck-type ck-preferences">Preferences</span></td>
+          </tr>
+          <tr>
+            <td class="ck-name">pai_theme</td>
+            <td>Stores your preferred display theme (dark/light)</td>
+            <td>12 months</td>
+            <td><span class="ck-type ck-preferences">Preferences</span></td>
+          </tr>
+          <tr>
+            <td class="ck-name">pai_region</td>
+            <td>Remembers your selected region for relevant content delivery</td>
+            <td>6 months</td>
+            <td><span class="ck-type ck-preferences">Preferences</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>4. Third-Party Cookies</h3>
+      <p>We take a minimal approach to third-party cookies. Our Website may include the following third-party services
+        that set their own cookies:</p>
+      <ul>
+        <li><strong>Stripe (Payment Processing):</strong> When you visit our pricing or checkout pages, Stripe may set
+          cookies necessary for secure payment processing and fraud prevention. These are essential cookies governed by
+          <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe's Privacy Policy</a>.</li>
+        <li><strong>Embedded Content:</strong> If you interact with embedded content (such as video tutorials or
+          documentation widgets), those third-party services may set their own cookies. We recommend reviewing their
+          respective privacy policies.</li>
+      </ul>
+      <p>We do not use any third-party advertising or marketing cookies. We do not participate in cross-site tracking
+        networks, and we do not allow any third party to use cookies on our Website for advertising purposes.</p>
+
+      <h3>5. Managing Cookies</h3>
+      <p>You have several options for managing cookies:</p>
+      <ul>
+        <li><strong>Cookie Consent Banner:</strong> When you first visit our Website, you can choose which categories of
+          cookies to accept or decline through our consent banner. You can update your preferences at any time by
+          clicking the "Cookie Settings" link in our footer.</li>
+        <li><strong>Browser Settings:</strong> Most web browsers allow you to control cookies through their settings.
+          You can typically configure your browser to block or delete cookies. Consult your browser's help documentation
+          for specific instructions:
+          <ul>
+            <li>Chrome: Settings &gt; Privacy and Security &gt; Cookies</li>
+            <li>Firefox: Settings &gt; Privacy &amp; Security &gt; Cookies</li>
+            <li>Safari: Preferences &gt; Privacy &gt; Manage Website Data</li>
+            <li>Edge: Settings &gt; Cookies and Site Permissions</li>
+          </ul>
+        </li>
+        <li><strong>Do Not Track:</strong> Our Website respects the "Do Not Track" (DNT) browser signal. When we detect
+          a DNT signal, we disable all non-essential cookies and analytics tracking.</li>
+      </ul>
+      <p>Please note that disabling essential cookies may impair certain functionality of the Website, such as the
+        ability to log in or maintain preferences across pages. Disabling analytics or preference cookies will not
+        affect core Website functionality.</p>
+
+      <h3>6. Changes to This Policy</h3>
+      <p>We may update this Cookie Policy periodically to reflect changes in the cookies we use, our practices, or
+        applicable legal requirements. When we make material changes, we will:</p>
+      <ul>
+        <li>Post the updated policy on our Website with a revised "Last Updated" date</li>
+        <li>Display a new cookie consent banner so you can review and update your preferences</li>
+        <li>Notify registered users via email if changes significantly affect the way we process data</li>
+      </ul>
+      <p>We encourage you to review this policy periodically. Your continued use of the Website after any changes
+        constitutes your acceptance of the updated Cookie Policy.</p>
+
+      <h3>7. Contact Us</h3>
+      <p>If you have any questions about our use of cookies or this Cookie Policy, please do not hesitate to contact us:
+      </p>
+      <ul>
+        <li><strong>Email:</strong> <a href="mailto:privacy@pai-technology.com">privacy@pai-technology.com</a></li>
+        <li><strong>Company:</strong> PocketAI Technologies</li>
+      </ul>
+      <p>For more information about how we handle your personal data, please review our <a href="privacy.html">Privacy
+          Policy</a>. For questions about the terms governing your use of the Service, please see our <a
+          href="terms.html">Terms of Service</a>.</p>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">Pocket<em>AI</em></div>
+        <p>On-device AI that works everywhere. Private, fast, and always available.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+            </svg></a>
+          <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+            </svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+              <rect x="2" y="9" width="4" height="12" />
+              <circle cx="4" cy="4" r="2" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="index.html#features">Features</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="index.html#how">How It Works</a>
+        <a href="sdk.html">SDK</a>
+        <a href="changelog.html">Changelog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Solutions</h4>
+        <a href="individuals.html">For Individuals</a>
+        <a href="developers.html">For Developers</a>
+        <a href="enterprise.html">For Enterprise</a>
+        <a href="healthcare.html">Healthcare</a>
+        <a href="defense.html">Defense</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="careers.html">Careers</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Newsletter</h4>
+        <p style="color:var(--gray);font-size:.85rem;margin-bottom:12px">Stay updated with the latest from PocketAI.</p>
+        <div class="nl-input">
+          <input type="email" placeholder="Enter your email">
+          <button aria-label="Subscribe"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 PocketAI Technologies. All rights reserved.</p>
+      <div class="f-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="cookies.html">Cookie Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const C = document.getElementById('cur'), D = document.getElementById('curD'); let cx = 0, cy = 0, dx = 0, dy = 0;
+      document.addEventListener('mousemove', e => { dx = e.clientX; dy = e.clientY; D.style.left = dx + 'px'; D.style.top = dy + 'px' });
+      (function lp() { cx += (dx - cx) * .1; cy += (dy - cy) * .1; C.style.left = cx + 'px'; C.style.top = cy + 'px'; requestAnimationFrame(lp) })();
+      document.querySelectorAll('a,button,.btn').forEach(el => { el.addEventListener('mouseenter', () => C.classList.add('h')); el.addEventListener('mouseleave', () => C.classList.remove('h')) });
+      document.querySelectorAll('[data-tilt]').forEach(el => { el.addEventListener('mousemove', e => { const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height; el.style.transform = `perspective(900px) rotateX(${(y - .5) * -7}deg) rotateY(${(x - .5) * 7}deg) scale3d(1.01,1.01,1.01)`; el.style.setProperty('--mx', x * 100 + '%'); el.style.setProperty('--my', y * 100 + '%') }); el.addEventListener('mouseleave', () => { el.style.transform = '' }) });
+      document.querySelectorAll('.mag').forEach(w => { const b = w.querySelector('.btn'); w.addEventListener('mousemove', e => { const r = w.getBoundingClientRect(); b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .2}px,${(e.clientY - r.top - r.height / 2) * .2}px)` }); w.addEventListener('mouseleave', () => { b.style.transform = '' }) });
+      const rO = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis') }) }, { threshold: .08, rootMargin: '0px 0px -30px 0px' });
+      document.querySelectorAll('.rv').forEach(e => rO.observe(e));
+      window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 50));
+      const blobs = document.querySelectorAll('.bl'); let tk = false;
+      window.addEventListener('scroll', () => { if (!tk) { requestAnimationFrame(() => { const s = scrollY; blobs[0].style.transform = `translate(${Math.sin(s * .002) * 30}px,${s * -.1}px)`; blobs[1].style.transform = `translate(${Math.cos(s * .0015) * 20}px,${s * -.06}px)`; blobs[2].style.transform = `translate(${Math.sin(s * .001) * 15}px,${s * -.04}px)`; tk = false }); tk = true } });
+      document.querySelectorAll('a[href^="#"]').forEach(a => { a.addEventListener('click', e => { e.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }) }) });
+    })();
+    // Hamburger
+    document.getElementById('hamburger').addEventListener('click', function () { document.getElementById('navLinks').classList.toggle('open'); });
+  </script>
+</body>
+
+</html>

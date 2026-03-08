@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>PocketAI — Changelog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    :root {
+      --black: #000;
+      --c1: #070707;
+      --c2: #0e0e0e;
+      --c3: #161616;
+      --c4: #1c1c1c;
+      --forest: #01693F;
+      --em: #1AB670;
+      --em2: #10B981;
+      --em-lt: #1EAA73;
+      --sage: #008851;
+      --white: #fff;
+      --w2: #e8e8e8;
+      --gray: #9ca3af;
+      --gray-d: #5a5f6b;
+      --gray-f: #252525;
+      --glow: rgba(26, 182, 112, .16);
+      --glow-s: rgba(26, 182, 112, .06);
+      --gl: rgba(255, 255, 255, .025);
+      --gl-h: rgba(255, 255, 255, .045);
+      --gl-b: rgba(255, 255, 255, .06);
+      --gl-b2: rgba(255, 255, 255, .1);
+      --r: 14px;
+      --rl: 22px;
+      --fh: 'Montserrat', sans-serif;
+      --fb: 'Montserrat', sans-serif;
+      --fm: 'JetBrains Mono', monospace;
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--fb);
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: none
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: .03;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    img {
+      max-width: 100%;
+      display: block
+    }
+
+    /* Cursor */
+    .cur {
+      position: fixed;
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--em);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10001;
+      transform: translate(-50%, -50%);
+      transition: width .25s, height .25s, border-color .25s, background .25s;
+      mix-blend-mode: difference
+    }
+
+    .cur.h {
+      width: 52px;
+      height: 52px
+    }
+
+    .cur-d {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: var(--em);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10001;
+      transform: translate(-50%, -50%)
+    }
+
+    @media(max-width:768px) {
+
+      .cur,
+      .cur-d {
+        display: none
+      }
+
+      body {
+        cursor: auto
+      }
+    }
+
+    /* Blobs */
+    .bl {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      will-change: transform
+    }
+
+    .bl1 {
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(circle, var(--em) 0%, transparent 70%);
+      top: -120px;
+      left: -120px;
+      opacity: .12;
+      filter: blur(110px)
+    }
+
+    .bl2 {
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, var(--forest) 0%, transparent 70%);
+      bottom: -80px;
+      right: -80px;
+      opacity: .1;
+      filter: blur(110px)
+    }
+
+    .bl3 {
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, var(--sage) 0%, transparent 70%);
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: .09;
+      filter: blur(110px)
+    }
+
+    /* Nav */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 14px 0;
+      z-index: 1000;
+      transition: background .35s, border .35s, backdrop-filter .35s
+    }
+
+    #nav.scrolled {
+      background: rgba(7, 7, 7, .82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--gl-b)
+    }
+
+    .nav-in {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .logo {
+      font-family: var(--fh);
+      font-weight: 800;
+      font-size: 21px;
+      letter-spacing: -.04em;
+      color: var(--white)
+    }
+
+    .logo em {
+      font-style: normal;
+      color: var(--em)
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px
+    }
+
+    .nav-links a {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--gray);
+      transition: color .25s
+    }
+
+    .nav-links a:hover {
+      color: var(--white)
+    }
+
+    .nav-cta {
+      margin-left: 8px
+    }
+
+    /* Hamburger */
+    .ham {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 1001;
+      background: none;
+      border: none;
+      padding: 4px
+    }
+
+    .ham span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform .3s, opacity .3s
+    }
+
+    .mob-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .96);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px
+    }
+
+    .mob-menu.open {
+      display: flex
+    }
+
+    .mob-menu a {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--white)
+    }
+
+    @media(max-width:768px) {
+      .nav-links {
+        display: none
+      }
+
+      .ham {
+        display: flex
+      }
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 24px;
+      border-radius: 100px;
+      font-size: 13.5px;
+      font-weight: 600;
+      font-family: var(--fb);
+      border: none;
+      cursor: pointer;
+      transition: all .3s;
+      text-decoration: none
+    }
+
+    .btn-p {
+      background: var(--em);
+      color: var(--black)
+    }
+
+    .btn-p:hover {
+      box-shadow: 0 0 28px var(--glow), 0 0 6px var(--em);
+      filter: brightness(1.08)
+    }
+
+    .btn-g {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid var(--gl-b2)
+    }
+
+    .btn-g:hover {
+      border-color: var(--em);
+      color: var(--em)
+    }
+
+    .btn-sm {
+      padding: 9px 20px;
+      font-size: 12.5px
+    }
+
+    .nav-cta .btn {
+      background: transparent;
+      border: 1px solid var(--em);
+      color: var(--em)
+    }
+
+    .nav-cta .btn:hover {
+      background: var(--em);
+      color: var(--black)
+    }
+
+    /* Scroll Reveal */
+    .rv {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity .7s, transform .7s
+    }
+
+    .rv.vis {
+      opacity: 1;
+      transform: none
+    }
+
+    .d1 {
+      transition-delay: .07s
+    }
+
+    .d2 {
+      transition-delay: .14s
+    }
+
+    .d3 {
+      transition-delay: .21s
+    }
+
+    .d4 {
+      transition-delay: .28s
+    }
+
+    .d5 {
+      transition-delay: .35s
+    }
+
+    /* Section headers */
+    .sh {
+      text-align: center;
+      margin-bottom: 56px
+    }
+
+    .sh-o {
+      font-family: var(--fm);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: var(--em);
+      margin-bottom: 12px;
+      display: block
+    }
+
+    .sh h2 {
+      font-family: var(--fh);
+      font-size: clamp(28px, 4.5vw, 44px);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--white)
+    }
+
+    .sh p {
+      color: var(--gray);
+      max-width: 560px;
+      margin: 16px auto 0;
+      font-size: 15px
+    }
+
+    /* Glass Card */
+    .glass {
+      background: var(--gl);
+      border: 1px solid var(--gl-b);
+      border-radius: var(--rl);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: border-color .3s, box-shadow .3s
+    }
+
+    .glass:hover {
+      border-color: var(--gl-b2);
+      box-shadow: 0 0 30px var(--glow-s)
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 28px
+    }
+
+    /* Hero */
+    .hero {
+      padding: 160px 0 100px;
+      text-align: center;
+      position: relative;
+      z-index: 1
+    }
+
+    .hero-o {
+      font-family: var(--fm);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: var(--em);
+      margin-bottom: 18px;
+      display: inline-block
+    }
+
+    .hero h1 {
+      font-family: var(--fh);
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -.03em;
+      margin-bottom: 20px
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--em), var(--sage));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text
+    }
+
+    .hero p {
+      color: var(--gray);
+      font-size: 17px;
+      max-width: 580px;
+      margin: 0 auto 36px;
+      line-height: 1.7
+    }
+
+    /* Timeline */
+    .timeline {
+      padding: 40px 0 80px;
+      position: relative;
+      z-index: 1
+    }
+
+    .tl-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative
+    }
+
+    .tl-wrap::before {
+      content: '';
+      position: absolute;
+      left: 28px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--em), var(--forest), transparent);
+      border-radius: 2px
+    }
+
+    @media(max-width:600px) {
+      .tl-wrap::before {
+        left: 16px
+      }
+    }
+
+    .tl-entry {
+      position: relative;
+      padding-left: 72px;
+      margin-bottom: 48px
+    }
+
+    @media(max-width:600px) {
+      .tl-entry {
+        padding-left: 48px
+      }
+    }
+
+    .tl-entry:last-child {
+      margin-bottom: 0
+    }
+
+    .tl-dot {
+      position: absolute;
+      left: 20px;
+      top: 32px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--black);
+      border: 2.5px solid var(--em);
+      z-index: 2;
+      box-shadow: 0 0 12px var(--glow)
+    }
+
+    @media(max-width:600px) {
+      .tl-dot {
+        left: 8px;
+        width: 16px;
+        height: 16px
+      }
+    }
+
+    .tl-card {
+      padding: 32px;
+      position: relative
+    }
+
+    .tl-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 18px
+    }
+
+    .tl-version {
+      font-family: var(--fm);
+      font-size: 12px;
+      font-weight: 500;
+      background: var(--glow);
+      color: var(--em);
+      padding: 4px 14px;
+      border-radius: 100px;
+      letter-spacing: .02em
+    }
+
+    .tl-date {
+      font-family: var(--fm);
+      font-size: 12px;
+      color: var(--gray-d)
+    }
+
+    .tl-card h3 {
+      font-family: var(--fh);
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      line-height: 1.3
+    }
+
+    .tl-subtitle {
+      font-size: 14px;
+      color: var(--gray);
+      margin-bottom: 20px
+    }
+
+    .tl-changes {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .tl-changes li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--w2);
+      line-height: 1.6
+    }
+
+    .tl-changes li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--em);
+      margin-top: 8px
+    }
+
+    /* Tags */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--fm);
+      font-size: 10px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin-right: 6px;
+      flex-shrink: 0
+    }
+
+    .tag-new {
+      background: rgba(26, 182, 112, .15);
+      color: var(--em)
+    }
+
+    .tag-improved {
+      background: rgba(96, 165, 250, .15);
+      color: #60a5fa
+    }
+
+    .tag-fixed {
+      background: rgba(251, 191, 36, .15);
+      color: #fbbf24
+    }
+
+    /* CTA */
+    .cta-section {
+      padding: 100px 0;
+      text-align: center;
+      position: relative;
+      z-index: 1
+    }
+
+    .cta-section h2 {
+      font-family: var(--fh);
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 800;
+      margin-bottom: 14px
+    }
+
+    .cta-section p {
+      color: var(--gray);
+      max-width: 480px;
+      margin: 0 auto 32px;
+      font-size: 15px
+    }
+
+    .cta-form {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      max-width: 420px;
+      margin: 0 auto;
+      flex-wrap: wrap
+    }
+
+    .cta-form input {
+      flex: 1;
+      min-width: 200px;
+      padding: 12px 20px;
+      background: var(--c2);
+      border: 1px solid var(--gl-b);
+      border-radius: 100px;
+      color: var(--white);
+      font-size: 14px;
+      font-family: var(--fb);
+      outline: none;
+      transition: border-color .25s
+    }
+
+    .cta-form input:focus {
+      border-color: var(--em)
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--gl-b);
+      padding: 64px 0 0;
+      position: relative;
+      z-index: 1
+    }
+
+    .ft-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1fr 1.3fr;
+      gap: 40px;
+      margin-bottom: 48px
+    }
+
+    @media(max-width:900px) {
+      .ft-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    @media(max-width:560px) {
+      .ft-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .ft-brand p {
+      color: var(--gray);
+      font-size: 13px;
+      margin: 14px 0 20px;
+      line-height: 1.65
+    }
+
+    .ft-socials {
+      display: flex;
+      gap: 14px
+    }
+
+    .ft-socials a {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--gl-b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color .25s, background .25s
+    }
+
+    .ft-socials a:hover {
+      border-color: var(--em);
+      background: var(--glow)
+    }
+
+    .ft-socials svg {
+      width: 15px;
+      height: 15px;
+      fill: var(--gray);
+      transition: fill .25s
+    }
+
+    .ft-socials a:hover svg {
+      fill: var(--em)
+    }
+
+    .ft-col h4 {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+      letter-spacing: .06em
+    }
+
+    .ft-col a {
+      display: block;
+      font-size: 13px;
+      color: var(--gray);
+      margin-bottom: 10px;
+      transition: color .25s
+    }
+
+    .ft-col a:hover {
+      color: var(--em)
+    }
+
+    .ft-news p {
+      color: var(--gray);
+      font-size: 13px;
+      margin-bottom: 14px
+    }
+
+    .ft-news-form {
+      display: flex;
+      gap: 8px
+    }
+
+    .ft-news-form input {
+      flex: 1;
+      padding: 10px 16px;
+      background: var(--c2);
+      border: 1px solid var(--gl-b);
+      border-radius: 100px;
+      color: var(--white);
+      font-size: 13px;
+      font-family: var(--fb);
+      outline: none;
+      transition: border-color .25s
+    }
+
+    .ft-news-form input:focus {
+      border-color: var(--em)
+    }
+
+    .ft-news-form button {
+      padding: 10px 20px;
+      border-radius: 100px;
+      background: var(--em);
+      color: var(--black);
+      font-weight: 600;
+      font-size: 12.5px;
+      border: none;
+      cursor: pointer;
+      font-family: var(--fb);
+      transition: filter .25s
+    }
+
+    .ft-news-form button:hover {
+      filter: brightness(1.1)
+    }
+
+    .ft-bottom {
+      border-top: 1px solid var(--gl-b);
+      padding: 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px
+    }
+
+    .ft-copy {
+      font-size: 12px;
+      color: var(--gray-d)
+    }
+
+    .ft-legal {
+      display: flex;
+      gap: 20px
+    }
+
+    .ft-legal a {
+      font-size: 12px;
+      color: var(--gray-d);
+      transition: color .25s
+    }
+
+    .ft-legal a:hover {
+      color: var(--gray)
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="cur" id="cur"></div>
+  <div class="cur-d" id="curD"></div>
+
+  <div class="bl bl1"></div>
+  <div class="bl bl2"></div>
+  <div class="bl bl3"></div>
+
+  <nav id="nav">
+    <div class="nav-in">
+      <a href="index.html" class="logo">Pocket<em>AI</em></a>
+      <div class="nav-links">
+        <a href="index.html#features">Features</a>
+        <a href="index.html#how">How It Works</a>
+        <a href="index.html#use-cases">Solutions</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="pitch.html">Pitch</a>
+        <span class="nav-cta"><a href="index.html#pricing" class="btn btn-p btn-sm">Get Started</a></span>
+      </div>
+      <button class="ham" id="ham" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mob-menu" id="mobMenu">
+    <a href="index.html#features" onclick="document.getElementById('mobMenu').classList.remove('open')">Features</a>
+    <a href="index.html#how" onclick="document.getElementById('mobMenu').classList.remove('open')">How It Works</a>
+    <a href="index.html#use-cases" onclick="document.getElementById('mobMenu').classList.remove('open')">Solutions</a>
+    <a href="index.html#pricing" onclick="document.getElementById('mobMenu').classList.remove('open')">Pricing</a>
+    <a href="pitch.html">Pitch</a>
+    <a href="index.html#pricing" class="btn btn-p btn-sm"
+      onclick="document.getElementById('mobMenu').classList.remove('open')">Get Started</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <span class="hero-o rv">Product Updates</span>
+      <h1 class="rv d1">What's <span>New</span></h1>
+      <p class="rv d2">Track every update, improvement, and fix. Follow our journey from foundation to the future of
+        on-device AI.</p>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="timeline">
+    <div class="container">
+      <div class="tl-wrap">
+
+        <!-- v0.9.0 -->
+        <div class="tl-entry rv">
+          <div class="tl-dot"></div>
+          <div class="glass tl-card" data-tilt>
+            <div class="tl-header">
+              <span class="tl-version">v0.9.0</span>
+              <span class="tl-date">March 2026</span>
+            </div>
+            <h3>Beta Release</h3>
+            <p class="tl-subtitle">Our biggest milestone yet -- PocketAI enters public beta with hybrid intelligence and
+              multi-agent capabilities.</p>
+            <ul class="tl-changes">
+              <li><span class="tag tag-new">New</span> Hybrid cloud/on-device architecture that seamlessly routes
+                queries based on complexity and connectivity</li>
+              <li><span class="tag tag-new">New</span> Multi-agent system beta enabling collaborative AI agents for
+                complex multi-step tasks</li>
+              <li><span class="tag tag-new">New</span> Voice mode for premium users with real-time speech-to-text and
+                text-to-speech on-device</li>
+              <li><span class="tag tag-improved">Improved</span> 1,500+ beta testers onboarded with structured feedback
+                pipeline and analytics dashboard</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- v0.8.0 -->
+        <div class="tl-entry rv">
+          <div class="tl-dot"></div>
+          <div class="glass tl-card" data-tilt>
+            <div class="tl-header">
+              <span class="tl-version">v0.8.0</span>
+              <span class="tl-date">February 2026</span>
+            </div>
+            <h3>Performance Update</h3>
+            <p class="tl-subtitle">Major inference speed improvements and power efficiency gains across flagship Android
+              devices.</p>
+            <ul class="tl-changes">
+              <li><span class="tag tag-improved">Improved</span> GPU optimization improvements across all supported
+                chipsets with dynamic workload balancing</li>
+              <li><span class="tag tag-improved">Improved</span> 40% faster inference on Snapdragon 8 Gen 3 using
+                Qualcomm AI Engine Direct integration</li>
+              <li><span class="tag tag-fixed">Fixed</span> Battery usage reduced by 25% through intelligent power-state
+                management and batch scheduling</li>
+              <li><span class="tag tag-new">New</span> New model: Phi-3 Mini optimized for on-device deployment with
+                4-bit quantization</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- v0.7.0 -->
+        <div class="tl-entry rv">
+          <div class="tl-dot"></div>
+          <div class="glass tl-card" data-tilt>
+            <div class="tl-header">
+              <span class="tl-version">v0.7.0</span>
+              <span class="tl-date">January 2026</span>
+            </div>
+            <h3>Agentic AI Preview</h3>
+            <p class="tl-subtitle">Introducing local AI agents that can take action on your behalf -- all running
+              privately on-device.</p>
+            <ul class="tl-changes">
+              <li><span class="tag tag-new">New</span> Local AI agents for task automation including file management,
+                app control, and web research</li>
+              <li><span class="tag tag-new">New</span> Calendar and email integration with natural language scheduling
+                and smart reply generation</li>
+              <li><span class="tag tag-new">New</span> Multi-step reasoning engine that breaks complex requests into
+                executable sub-tasks</li>
+              <li><span class="tag tag-improved">Improved</span> Tested on 1,200+ devices across 47 different hardware
+                configurations for maximum compatibility</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- v0.6.0 -->
+        <div class="tl-entry rv">
+          <div class="tl-dot"></div>
+          <div class="glass tl-card" data-tilt>
+            <div class="tl-header">
+              <span class="tl-version">v0.6.0</span>
+              <span class="tl-date">December 2025</span>
+            </div>
+            <h3>Foundation Release</h3>
+            <p class="tl-subtitle">Where it all began. The core engine that proves powerful AI can run entirely on your
+              phone.</p>
+            <ul class="tl-changes">
+              <li><span class="tag tag-new">New</span> Core on-device inference engine built on GGML with custom memory
+                management for mobile constraints</li>
+              <li><span class="tag tag-new">New</span> Basic chat interface with conversation history, context window
+                management, and markdown rendering</li>
+              <li><span class="tag tag-new">New</span> Offline-first architecture ensuring full functionality without
+                any network connectivity</li>
+              <li><span class="tag tag-new">New</span> Support for Llama 3.2 1B and 3B models with optimized 4-bit and
+                8-bit quantization variants</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="cta">
+    <div class="container rv">
+      <h2>Subscribe to Updates</h2>
+      <p>Get notified when we ship new features, improvements, and fixes. No spam, just product updates.</p>
+      <form class="cta-form" onsubmit="event.preventDefault()">
+        <input type="email" placeholder="you@email.com" aria-label="Email address">
+        <button type="submit" class="btn btn-p">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="ft-grid">
+        <div class="ft-brand">
+          <a href="index.html" class="logo">Pocket<em>AI</em></a>
+          <p>On-device AI that keeps your data private, runs offline, and delivers instant responses. Intelligence in
+            your pocket.</p>
+          <div class="ft-socials">
+            <a href="#" aria-label="X / Twitter"><svg viewBox="0 0 24 24">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24">
+                <path
+                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              </svg></a>
+            <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24">
+                <path
+                  d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+              </svg></a>
+          </div>
+        </div>
+        <div class="ft-col">
+          <h4>Product</h4>
+          <a href="index.html#features">Features</a>
+          <a href="index.html#pricing">Pricing</a>
+          <a href="index.html#how">How It Works</a>
+          <a href="sdk.html">SDK</a>
+          <a href="changelog.html">Changelog</a>
+        </div>
+        <div class="ft-col">
+          <h4>Solutions</h4>
+          <a href="individuals.html">For Individuals</a>
+          <a href="developers.html">For Developers</a>
+          <a href="enterprise.html">For Enterprise</a>
+          <a href="healthcare.html">Healthcare</a>
+          <a href="defense.html">Defense</a>
+        </div>
+        <div class="ft-col">
+          <h4>Company</h4>
+          <a href="about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="ft-col ft-news">
+          <h4>Newsletter</h4>
+          <p>Stay updated with the latest PocketAI news and developer updates.</p>
+          <form class="ft-news-form" onsubmit="event.preventDefault()">
+            <input type="email" placeholder="you@email.com" aria-label="Email address">
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="ft-bottom">
+        <span class="ft-copy">&copy; 2026 PocketAI Technologies</span>
+        <div class="ft-legal">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="cookies.html">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const C = document.getElementById('cur'), D = document.getElementById('curD'); let cx = 0, cy = 0, dx = 0, dy = 0;
+      document.addEventListener('mousemove', e => { dx = e.clientX; dy = e.clientY; D.style.left = dx + 'px'; D.style.top = dy + 'px' });
+      (function lp() { cx += (dx - cx) * .1; cy += (dy - cy) * .1; C.style.left = cx + 'px'; C.style.top = cy + 'px'; requestAnimationFrame(lp) })();
+      document.querySelectorAll('a,button,.btn').forEach(el => { el.addEventListener('mouseenter', () => C.classList.add('h')); el.addEventListener('mouseleave', () => C.classList.remove('h')) });
+      document.querySelectorAll('[data-tilt]').forEach(el => { el.addEventListener('mousemove', e => { const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height; el.style.transform = `perspective(900px) rotateX(${(y - .5) * -7}deg) rotateY(${(x - .5) * 7}deg) scale3d(1.01,1.01,1.01)`; el.style.setProperty('--mx', x * 100 + '%'); el.style.setProperty('--my', y * 100 + '%') }); el.addEventListener('mouseleave', () => { el.style.transform = '' }) });
+      document.querySelectorAll('.mag').forEach(w => { const b = w.querySelector('.btn'); w.addEventListener('mousemove', e => { const r = w.getBoundingClientRect(); b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .2}px,${(e.clientY - r.top - r.height / 2) * .2}px)` }); w.addEventListener('mouseleave', () => { b.style.transform = '' }) });
+      const rO = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis') }) }, { threshold: .08, rootMargin: '0px 0px -30px 0px' });
+      document.querySelectorAll('.rv').forEach(e => rO.observe(e));
+      window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 50));
+      const blobs = document.querySelectorAll('.bl'); let tk = false;
+      window.addEventListener('scroll', () => { if (!tk) { requestAnimationFrame(() => { const s = scrollY; blobs[0].style.transform = `translate(${Math.sin(s * .002) * 30}px,${s * -.1}px)`; blobs[1].style.transform = `translate(${Math.cos(s * .0015) * 20}px,${s * -.06}px)`; blobs[2].style.transform = `translate(${Math.sin(s * .001) * 15}px,${s * -.04}px)`; tk = false }); tk = true } });
+      document.querySelectorAll('a[href^="#"]').forEach(a => { a.addEventListener('click', e => { e.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }) }) });
+      document.getElementById('ham').addEventListener('click', () => { document.getElementById('mobMenu').classList.toggle('open') });
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,2224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketAI — Investor Pitch</title>
+    <meta name="description"
+        content="PocketAI Investor Pitch — LLMs in Your Pocket. On-device AI for privacy, speed, and accessibility.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        :root {
+            --black: #000;
+            --c1: #070707;
+            --c2: #0e0e0e;
+            --c3: #161616;
+            --c4: #1c1c1c;
+            --forest: #01693F;
+            --em: #1AB670;
+            --em2: #10B981;
+            --em-lt: #1EAA73;
+            --sage: #008851;
+            --white: #fff;
+            --w2: #e8e8e8;
+            --gray: #9ca3af;
+            --gray-d: #5a5f6b;
+            --gray-f: #252525;
+            --glow: rgba(26, 182, 112, .16);
+            --glow-s: rgba(26, 182, 112, .06);
+            --gl: rgba(255, 255, 255, .025);
+            --gl-h: rgba(255, 255, 255, .045);
+            --gl-b: rgba(255, 255, 255, .06);
+            --gl-b2: rgba(255, 255, 255, .1);
+            --r: 14px;
+            --rl: 22px;
+            --fh: 'Montserrat', sans-serif;
+            --fb: 'Montserrat', sans-serif;
+            --fm: 'JetBrains Mono', monospace
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased
+        }
+
+        body {
+            font-family: var(--fb);
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            cursor: none
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        ::selection {
+            background: var(--em);
+            color: #000
+        }
+
+        img {
+            display: block;
+            max-width: 100%
+        }
+
+        /* CURSOR */
+        .cur {
+            position: fixed;
+            width: 18px;
+            height: 18px;
+            border: 1.5px solid var(--em);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width .2s, height .2s, background .2s;
+            mix-blend-mode: difference
+        }
+
+        .cur.h {
+            width: 52px;
+            height: 52px;
+            background: rgba(26, 182, 112, .07)
+        }
+
+        .cur-d {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--em);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%)
+        }
+
+        /* NOISE */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 9998;
+            pointer-events: none;
+            opacity: .03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 200px
+        }
+
+        /* BLOBS */
+        .blobs {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden
+        }
+
+        .bl {
+            position: absolute;
+            filter: blur(110px);
+            opacity: .2;
+            will-change: transform
+        }
+
+        .bl1 {
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, var(--em) 0%, transparent 70%);
+            top: -10%;
+            left: -8%
+        }
+
+        .bl2 {
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, var(--forest) 0%, transparent 70%);
+            bottom: 15%;
+            right: -10%;
+            opacity: .14
+        }
+
+        .bl3 {
+            width: 380px;
+            height: 380px;
+            background: radial-gradient(circle, var(--sage) 0%, transparent 70%);
+            bottom: -8%;
+            left: 28%;
+            opacity: .12
+        }
+
+        /* LAYOUT */
+        .w {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px
+        }
+
+        section {
+            position: relative;
+            z-index: 1
+        }
+
+        /* NAV */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 14px 0;
+            transition: all .4s cubic-bezier(.16, 1, .3, 1)
+        }
+
+        .nav.scrolled {
+            background: rgba(0, 0, 0, .72);
+            backdrop-filter: blur(28px) saturate(1.4);
+            -webkit-backdrop-filter: blur(28px) saturate(1.4);
+            border-bottom: 1px solid rgba(26, 182, 112, .08);
+            box-shadow: 0 1px 24px rgba(0, 0, 0, .3)
+        }
+
+        .nav-in {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            font-family: var(--fh);
+            font-weight: 800;
+            font-size: 21px;
+            letter-spacing: -.04em
+        }
+
+        .logo em {
+            font-style: normal;
+            color: var(--em)
+        }
+
+        .nl {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            list-style: none
+        }
+
+        .nl a {
+            font-size: 13.5px;
+            color: var(--gray);
+            font-weight: 500;
+            transition: color .3s, background .3s;
+            padding: 7px 14px;
+            border-radius: 8px;
+            letter-spacing: -.01em
+        }
+
+        .nl a:hover {
+            color: var(--white);
+            background: rgba(255, 255, 255, .04)
+        }
+
+        .nl .act {
+            color: var(--em)
+        }
+
+        .m-tog {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            cursor: none
+        }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 24px;
+            border-radius: 100px;
+            font-family: var(--fb);
+            font-size: 13.5px;
+            font-weight: 600;
+            border: none;
+            cursor: none;
+            transition: all .35s cubic-bezier(.4, 0, .2, 1);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap
+        }
+
+        .btn-p {
+            background: var(--em);
+            color: #000;
+            box-shadow: 0 0 0 0 var(--glow)
+        }
+
+        .btn-p:hover {
+            box-shadow: 0 0 40px var(--glow);
+            transform: translateY(-2px)
+        }
+
+        .btn-p::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, .18));
+            opacity: 0;
+            transition: opacity .3s
+        }
+
+        .btn-p:hover::after {
+            opacity: 1
+        }
+
+        .btn-g {
+            background: transparent;
+            color: var(--white);
+            border: 1px solid var(--gl-b)
+        }
+
+        .btn-g:hover {
+            border-color: rgba(26, 182, 112, .3);
+            color: var(--em)
+        }
+
+        .btn-sm {
+            padding: 8px 18px;
+            font-size: 13px;
+            font-weight: 600
+        }
+
+        .nav .btn-p.btn-sm {
+            background: transparent;
+            color: var(--em);
+            border: 1px solid rgba(26, 182, 112, .35);
+            box-shadow: none
+        }
+
+        .nav .btn-p.btn-sm:hover {
+            background: var(--em);
+            color: #000;
+            border-color: var(--em);
+            box-shadow: 0 0 24px var(--glow)
+        }
+
+        .nav .btn-p.btn-sm::after {
+            display: none
+        }
+
+        .mag {
+            display: inline-block
+        }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, .3) 0%, rgba(0, 0, 0, .4) 40%, rgba(0, 0, 0, .85) 80%, #000 100%)
+        }
+
+        .hero-c {
+            position: relative;
+            z-index: 2;
+            padding: 160px 40px 100px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            text-align: center
+        }
+
+        .hero-c h1 {
+            font-family: var(--fh);
+            font-size: clamp(32px, 5vw, 64px);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -.04em;
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fU .7s .2s forwards
+        }
+
+        .hero-c h1 em {
+            font-style: normal;
+            color: var(--em)
+        }
+
+        .hero-sub {
+            font-size: 17px;
+            color: var(--gray);
+            max-width: 540px;
+            margin: 0 auto 12px;
+            line-height: 1.7;
+            opacity: 0;
+            animation: fU .7s .5s forwards
+        }
+
+        .hero-site {
+            font-family: var(--fm);
+            font-size: 13px;
+            color: var(--em);
+            letter-spacing: .08em;
+            opacity: 0;
+            animation: fU .7s .7s forwards;
+            margin-bottom: 36px
+        }
+
+        .hero-acts {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            opacity: 0;
+            animation: fU .7s .9s forwards
+        }
+
+        /* PITCH VIDEO */
+        .pitch-vid {
+            padding: 0 40px 80px;
+            max-width: 960px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2
+        }
+
+        .pitch-vid-tilt {
+            perspective: 1400px
+        }
+
+        .pitch-vid-card {
+            border-radius: var(--rl);
+            overflow: hidden;
+            background: var(--c1);
+            border: 1px solid var(--gl-b);
+            box-shadow: 0 50px 100px -20px rgba(0, 0, 0, .7), 0 0 60px -10px var(--glow-s);
+            transform-style: preserve-3d;
+            transition: transform .5s cubic-bezier(.4, 0, .2, 1), box-shadow .5s;
+            position: relative
+        }
+
+        .pitch-vid-card:hover {
+            box-shadow: 0 50px 100px -20px rgba(0, 0, 0, .8), 0 0 80px -5px var(--glow)
+        }
+
+        .pitch-vid-card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(160deg, rgba(26, 182, 112, .2) 0%, transparent 30%, transparent 70%, rgba(1, 105, 63, .12) 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            z-index: 2
+        }
+
+        .pitch-vid-card video {
+            width: 100%;
+            display: block;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            background: #000
+        }
+
+        /* SECTION */
+        .sec {
+            padding: 100px 0
+        }
+
+        .sec-alt {
+            padding: 80px 0
+        }
+
+        .sh {
+            text-align: center;
+            margin-bottom: 56px
+        }
+
+        .sh-o {
+            font-family: var(--fm);
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: .18em;
+            color: var(--em);
+            margin-bottom: 14px
+        }
+
+        .sh h2 {
+            font-family: var(--fh);
+            font-size: clamp(28px, 3.8vw, 44px);
+            font-weight: 800;
+            letter-spacing: -.03em;
+            line-height: 1.1
+        }
+
+        .sh p {
+            font-size: 15px;
+            color: var(--gray);
+            margin-top: 14px;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7
+        }
+
+        /* QUOTE SECTION */
+        .quote {
+            padding: 80px 0
+        }
+
+        .quote-card {
+            padding: 48px;
+            border-radius: var(--rl);
+            background: var(--gl);
+            border: 1px solid var(--gl-b);
+            text-align: center;
+            max-width: 740px;
+            margin: 0 auto;
+            position: relative
+        }
+
+        .quote-card::before {
+            content: '\201C';
+            font-family: Georgia, serif;
+            font-size: 64px;
+            line-height: 1;
+            color: var(--em);
+            opacity: .3;
+            position: absolute;
+            top: 20px;
+            left: 32px
+        }
+
+        .quote-text {
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 1.7;
+            font-style: italic;
+            color: var(--w2);
+            margin-bottom: 20px;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto
+        }
+
+        .quote-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px
+        }
+
+        .quote-av {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(26, 182, 112, .3);
+            box-shadow: 0 0 12px rgba(26, 182, 112, .15)
+        }
+
+        .quote-av img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .quote-info {
+            text-align: left
+        }
+
+        .quote-name {
+            font-size: 14px;
+            font-weight: 700
+        }
+
+        .quote-role {
+            font-size: 12px;
+            color: var(--gray-d)
+        }
+
+        /* MARKET STATS */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 48px
+        }
+
+        .stat-card {
+            padding: 28px 20px;
+            border-radius: var(--rl);
+            background: var(--gl);
+            border: 1px solid var(--gl-b);
+            text-align: center;
+            transition: all .35s;
+            position: relative;
+            overflow: hidden
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20%;
+            right: 20%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--em), transparent);
+            opacity: 0;
+            transition: opacity .3s
+        }
+
+        .stat-card:hover {
+            background: var(--gl-h);
+            border-color: var(--gl-b2);
+            transform: translateY(-4px)
+        }
+
+        .stat-card:hover::before {
+            opacity: 1
+        }
+
+        .stat-val {
+            font-family: var(--fh);
+            font-size: clamp(28px, 3vw, 40px);
+            font-weight: 800;
+            letter-spacing: -.04em;
+            color: var(--em);
+            margin-bottom: 4px
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.5
+        }
+
+        /* TAM/SAM/SOM CHART */
+        .tam-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 48px
+        }
+
+        .tam-circles {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            flex-shrink: 0
+        }
+
+        .tam-ring {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border: 2px solid
+        }
+
+        .tam-ring.tam {
+            width: 320px;
+            height: 320px;
+            top: 0;
+            left: 0;
+            border-color: rgba(26, 182, 112, .15);
+            background: rgba(26, 182, 112, .02)
+        }
+
+        .tam-ring.sam {
+            width: 220px;
+            height: 220px;
+            top: 50px;
+            left: 50px;
+            border-color: rgba(26, 182, 112, .25);
+            background: rgba(26, 182, 112, .04)
+        }
+
+        .tam-ring.som {
+            width: 120px;
+            height: 120px;
+            top: 100px;
+            left: 100px;
+            border-color: var(--em);
+            background: rgba(26, 182, 112, .08)
+        }
+
+        .tam-ring-label {
+            font-family: var(--fm);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: var(--gray-d);
+            margin-bottom: 4px
+        }
+
+        .tam-ring-val {
+            font-family: var(--fh);
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--white)
+        }
+
+        .tam-ring.som .tam-ring-val {
+            font-size: 16px
+        }
+
+        .tam-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 20px
+        }
+
+        .tam-leg-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px
+        }
+
+        .tam-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-top: 4px;
+            flex-shrink: 0
+        }
+
+        .tam-leg-title {
+            font-family: var(--fh);
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 2px
+        }
+
+        .tam-leg-desc {
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.6
+        }
+
+        /* PROBLEM / SOLUTION CARDS */
+        .ps-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px
+        }
+
+        .ps-card {
+            padding: 32px 28px;
+            border-radius: var(--rl);
+            background: var(--gl);
+            border: 1px solid var(--gl-b);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: transform .35s ease-out, box-shadow .4s, border-color .4s
+        }
+
+        .ps-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(500px circle at var(--mx, 50%) var(--my, 50%), rgba(26, 182, 112, .06), transparent 50%);
+            opacity: 0;
+            transition: opacity .4s;
+            pointer-events: none
+        }
+
+        .ps-card:hover::before {
+            opacity: 1
+        }
+
+        .ps-card:hover {
+            border-color: rgba(26, 182, 112, .12);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, .3)
+        }
+
+        .ps-ico {
+            width: 42px;
+            height: 42px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px
+        }
+
+        .ps-ico.prob {
+            background: rgba(239, 68, 68, .08);
+            border: 1px solid rgba(239, 68, 68, .12)
+        }
+
+        .ps-ico.prob svg {
+            color: #ef4444
+        }
+
+        .ps-ico.sol {
+            background: rgba(26, 182, 112, .06);
+            border: 1px solid rgba(26, 182, 112, .08)
+        }
+
+        .ps-ico.sol svg {
+            color: var(--em)
+        }
+
+        .ps-ico svg {
+            width: 20px;
+            height: 20px
+        }
+
+        .ps-card h3 {
+            font-family: var(--fh);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -.01em
+        }
+
+        .ps-card p {
+            font-size: 13.5px;
+            color: var(--gray);
+            line-height: 1.7
+        }
+
+        .ps-stat {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 12px;
+            font-family: var(--fm);
+            font-size: 11px;
+            color: var(--em);
+            letter-spacing: .06em;
+            padding: 4px 12px;
+            border-radius: 100px;
+            background: rgba(26, 182, 112, .06);
+            border: 1px solid rgba(26, 182, 112, .08)
+        }
+
+        /* SOLUTION PILLARS */
+        .pill-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px
+        }
+
+        .pill-card {
+            padding: 24px 16px;
+            border-radius: var(--rl);
+            background: var(--gl);
+            border: 1px solid var(--gl-b);
+            text-align: center;
+            transition: all .35s;
+            position: relative;
+            overflow: hidden
+        }
+
+        .pill-card:hover {
+            background: var(--gl-h);
+            border-color: var(--gl-b2);
+            transform: translateY(-4px)
+        }
+
+        .pill-ico {
+            width: 42px;
+            height: 42px;
+            border-radius: 11px;
+            background: rgba(26, 182, 112, .06);
+            border: 1px solid rgba(26, 182, 112, .08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px
+        }
+
+        .pill-ico svg {
+            width: 20px;
+            height: 20px;
+            color: var(--em)
+        }
+
+        .pill-card h3 {
+            font-family: var(--fh);
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px
+        }
+
+        .pill-card p {
+            font-size: 12px;
+            color: var(--gray);
+            line-height: 1.6
+        }
+
+        /* BUSINESS MODEL */
+        .biz-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px
+        }
+
+        .biz-card {
+            padding: 32px 24px;
+            border-radius: var(--rl);
+            background: var(--gl);
+            border: 1px solid var(--gl-b);
+            position: relative;
+            overflow: hidden;
+            transition: all .4s
+        }
+
+        .biz-card.pop {
+            border-color: rgba(26, 182, 112, .15);
+            background: rgba(26, 182, 112, .025)
+        }
+
+        .biz-card.pop::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20%;
+            right: 20%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--em), transparent)
+        }
+
+        .biz-card:hover {
+            border-color: rgba(26, 182, 112, .12);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, .3)
+        }
+
+        .biz-tag {
+            font-family: var(--fm);
+            font-size: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: .14em;
+            color: var(--em);
+            margin-bottom: 12px
+        }
+
+        .biz-card h3 {
+            font-family: var(--fh);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px
+        }
+
+        .biz-card p {
+            font-size: 13.5px;
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 16px
+        }
+
+        .biz-price {
+            font-family: var(--fh);
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -.03em;
+            color: var(--em)
+        }
+
+        .biz-price span {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-d)
+        }
+
+        /* COMPETITIVE ADVANTAGE */
+        .comp-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 40px
+        }
+
+        .comp-card {
+            padding: 28px 24px;
+            border-radius: var(--rl);
+            background: var(--gl);
+            border: 1px solid var(--gl-b);
+            transition: all .35s
+        }
+
+        .comp-card:hover {
+            background: var(--gl-h);
+            border-color: var(--gl-b2);
+            transform: translateY(-3px)
+        }
+
+        .comp-card h3 {
+            font-family: var(--fh);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px
+        }
+
+        .comp-card p {
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.7
+        }
+
+        .comp-table {
+            border-radius: var(--rl);
+            overflow: hidden;
+            border: 1px solid var(--gl-b);
+            background: var(--gl)
+        }
+
+        .comp-table-head {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            padding: 14px 24px;
+            background: rgba(26, 182, 112, .04);
+            border-bottom: 1px solid var(--gl-b)
+        }
+
+        .comp-table-head span {
+            font-family: var(--fm);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--gray-d);
+            font-weight: 500
+        }
+
+        .comp-table-head span:first-child {
+            color: var(--em)
+        }
+
+        .comp-table-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            padding: 12px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, .02)
+        }
+
+        .comp-table-row:last-child {
+            border-bottom: none
+        }
+
+        .comp-table-row span {
+            font-size: 13px;
+            color: var(--gray)
+        }
+
+        .comp-table-row span:first-child {
+            font-weight: 600;
+            color: var(--w2)
+        }
+
+        /* ROADMAP */
+        .road-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            position: relative
+        }
+
+        .road-row::before {
+            content: '';
+            position: absolute;
+            top: 42px;
+            left: calc(12.5% + 8px);
+            right: calc(12.5% + 8px);
+            height: 2px;
+            background: linear-gradient(90deg, var(--em), var(--forest), var(--sage), var(--em));
+            opacity: .25
+        }
+
+        .road-item {
+            text-align: center;
+            position: relative
+        }
+
+        .road-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid var(--em);
+            background: var(--black);
+            margin: 34px auto 20px;
+            position: relative;
+            z-index: 2
+        }
+
+        .road-dot.done {
+            background: var(--em)
+        }
+
+        .road-dot.cur {
+            background: var(--em);
+            box-shadow: 0 0 0 6px rgba(26, 182, 112, .2), 0 0 16px rgba(26, 182, 112, .3);
+            animation: pulseDot 2s infinite
+        }
+
+        @keyframes pulseDot {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 6px rgba(26, 182, 112, .2), 0 0 16px rgba(26, 182, 112, .3)
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(26, 182, 112, .1), 0 0 24px rgba(26, 182, 112, .2)
+            }
+        }
+
+        .road-tag {
+            font-family: var(--fm);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--em);
+            font-weight: 500
+        }
+
+        .road-item h3 {
+            font-family: var(--fh);
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            margin-top: 4px
+        }
+
+        .road-item p {
+            font-size: 12px;
+            color: var(--gray);
+            line-height: 1.6;
+            max-width: 200px;
+            margin: 0 auto
+        }
+
+        /* TEAM */
+        .team-card {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            padding: 40px;
+            border-radius: var(--rl);
+            background: var(--gl);
+            border: 1px solid var(--gl-b);
+            max-width: 800px;
+            margin: 0 auto
+        }
+
+        .team-av {
+            width: 140px;
+            height: 140px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid rgba(26, 182, 112, .2);
+            flex-shrink: 0;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, .4)
+        }
+
+        .team-av img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .team-info h3 {
+            font-family: var(--fh);
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 2px
+        }
+
+        .team-info .team-role {
+            font-size: 14px;
+            color: var(--em);
+            font-weight: 600;
+            margin-bottom: 12px
+        }
+
+        .team-info p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 16px
+        }
+
+        .team-clients {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+
+        .team-clients span {
+            font-size: 11px;
+            font-family: var(--fm);
+            padding: 4px 12px;
+            border-radius: 100px;
+            background: rgba(26, 182, 112, .06);
+            border: 1px solid rgba(26, 182, 112, .08);
+            color: var(--gray);
+            letter-spacing: .04em
+        }
+
+        .team-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 32px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto
+        }
+
+        .tm-item {
+            text-align: center;
+            padding: 20px 12px;
+            border-radius: var(--r);
+            background: var(--gl);
+            border: 1px solid var(--gl-b)
+        }
+
+        .tm-val {
+            font-family: var(--fh);
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--em);
+            letter-spacing: -.03em
+        }
+
+        .tm-label {
+            font-size: 11px;
+            color: var(--gray);
+            margin-top: 4px;
+            line-height: 1.4
+        }
+
+        /* THE ASK */
+        .ask-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            max-width: 800px;
+            margin: 0 auto
+        }
+
+        .ask-card {
+            padding: 32px 28px;
+            border-radius: var(--rl);
+            background: var(--gl);
+            border: 1px solid var(--gl-b);
+            text-align: center;
+            transition: all .35s
+        }
+
+        .ask-card:hover {
+            background: var(--gl-h);
+            border-color: var(--gl-b2);
+            transform: translateY(-4px)
+        }
+
+        .ask-ico {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: rgba(26, 182, 112, .06);
+            border: 1px solid rgba(26, 182, 112, .08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px
+        }
+
+        .ask-ico svg {
+            width: 28px;
+            height: 28px;
+            color: var(--em)
+        }
+
+        .ask-card h3 {
+            font-family: var(--fh);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px
+        }
+
+        .ask-card p {
+            font-size: 13.5px;
+            color: var(--gray);
+            line-height: 1.7
+        }
+
+        /* CTA */
+        .cta-s {
+            padding: 120px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        .cta-s::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 800px;
+            height: 800px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(26, 182, 112, .04) 0%, transparent 55%);
+            pointer-events: none
+        }
+
+        .cta-s h2 {
+            font-family: var(--fh);
+            font-size: clamp(30px, 4.5vw, 52px);
+            font-weight: 800;
+            letter-spacing: -.04em;
+            line-height: 1.08;
+            margin-bottom: 16px
+        }
+
+        .cta-s h2 em {
+            font-style: normal;
+            color: var(--em)
+        }
+
+        .cta-s>p {
+            font-size: 16px;
+            color: var(--gray);
+            max-width: 440px;
+            margin: 0 auto 32px;
+            line-height: 1.7
+        }
+
+        .cta-acts {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        /* DIVIDER */
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gl-b2), transparent);
+            margin: 0 auto
+        }
+
+        /* FOOTER MINI */
+        .ft-mini {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid var(--gl-b);
+            position: relative;
+            z-index: 1;
+            background: var(--c1)
+        }
+
+        .ft-mini p {
+            font-size: 12px;
+            color: var(--gray-d)
+        }
+
+        /* REVEALS */
+        .rv {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity .7s cubic-bezier(.16, 1, .3, 1), transform .7s cubic-bezier(.16, 1, .3, 1)
+        }
+
+        .rv.vis {
+            opacity: 1;
+            transform: none
+        }
+
+        .d1 {
+            transition-delay: .07s
+        }
+
+        .d2 {
+            transition-delay: .14s
+        }
+
+        .d3 {
+            transition-delay: .21s
+        }
+
+        .d4 {
+            transition-delay: .28s
+        }
+
+        .d5 {
+            transition-delay: .35s
+        }
+
+        @keyframes fU {
+            from {
+                opacity: 0;
+                transform: translateY(24px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        @keyframes chIn {
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:1024px) {
+            .stats-row {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .pill-grid {
+                grid-template-columns: repeat(3, 1fr)
+            }
+
+            .biz-grid,
+            .comp-grid {
+                grid-template-columns: 1fr
+            }
+
+            .road-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 24px
+            }
+
+            .road-row::before {
+                display: none
+            }
+
+            .tam-visual {
+                flex-direction: column
+            }
+
+            .team-metrics {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+
+        @media(max-width:768px) {
+            .nl {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: rgba(0, 0, 0, .92);
+                backdrop-filter: blur(28px);
+                -webkit-backdrop-filter: blur(28px);
+                padding: 16px 24px;
+                border-bottom: 1px solid var(--gl-b);
+                gap: 2px
+            }
+
+            .nl.open {
+                display: flex
+            }
+
+            .nl a {
+                padding: 12px 16px;
+                font-size: 15px;
+                width: 100%;
+                border-radius: 10px
+            }
+
+            .nl .btn.btn-p.btn-sm {
+                margin-left: 0 !important;
+                margin-top: 8px;
+                text-align: center;
+                justify-content: center
+            }
+
+            .m-tog {
+                display: block
+            }
+
+            .hero-c {
+                padding: 120px 24px 60px
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .ps-grid {
+                grid-template-columns: 1fr
+            }
+
+            .pill-grid {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .biz-grid {
+                grid-template-columns: 1fr
+            }
+
+            .comp-grid {
+                grid-template-columns: 1fr
+            }
+
+            .road-row {
+                grid-template-columns: 1fr;
+                max-width: 280px;
+                margin: 0 auto
+            }
+
+            .team-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 28px 20px
+            }
+
+            .team-clients {
+                justify-content: center
+            }
+
+            .ask-grid {
+                grid-template-columns: 1fr
+            }
+
+            .w {
+                padding: 0 20px
+            }
+
+            .pitch-vid {
+                padding: 0 20px 60px
+            }
+
+            .tam-circles {
+                width: 240px;
+                height: 240px
+            }
+
+            .tam-ring.tam {
+                width: 240px;
+                height: 240px
+            }
+
+            .tam-ring.sam {
+                width: 165px;
+                height: 165px;
+                top: 37px;
+                left: 37px
+            }
+
+            .tam-ring.som {
+                width: 90px;
+                height: 90px;
+                top: 75px;
+                left: 75px
+            }
+
+            .tam-ring-val {
+                font-size: 18px
+            }
+
+            .tam-ring.som .tam-ring-val {
+                font-size: 13px
+            }
+
+            body {
+                cursor: auto
+            }
+
+            .cur,
+            .cur-d {
+                display: none
+            }
+
+            .quote-card {
+                padding: 32px 20px
+            }
+
+            .hero-c h1 {
+                font-size: clamp(28px, 6vw, 48px)
+            }
+
+            .hero-acts {
+                flex-direction: column;
+                width: 100%
+            }
+
+            .hero-acts .btn {
+                width: 100%;
+                justify-content: center
+            }
+        }
+
+        @media(max-width:480px) {
+            .stats-row {
+                grid-template-columns: 1fr
+            }
+
+            .pill-grid {
+                grid-template-columns: 1fr
+            }
+
+            .team-metrics {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cur" id="cur"></div>
+    <div class="cur-d" id="curD"></div>
+    <div class="blobs">
+        <div class="bl bl1"></div>
+        <div class="bl bl2"></div>
+        <div class="bl bl3"></div>
+    </div>
+
+    <!-- NAV -->
+    <nav class="nav" id="nav">
+        <div class="nav-in">
+            <a href="index.html" class="logo">Pocket<em>AI</em></a>
+            <ul class="nl">
+                <li><a href="#market">Market</a></li>
+                <li><a href="#problem">Problem</a></li>
+                <li><a href="#solution">Solution</a></li>
+                <li><a href="#model">Business Model</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="index.html" class="btn btn-p btn-sm" style="margin-left:8px">Back to Site</a></li>
+            </ul>
+            <button class="m-tog" onclick="document.querySelector('.nl').classList.toggle('open')"
+                aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round">
+                    <line x1="4" y1="6" x2="20" y2="6" />
+                    <line x1="4" y1="12" x2="20" y2="12" />
+                    <line x1="4" y1="18" x2="20" y2="18" />
+                </svg></button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg"><img src="bg-slide1.png" alt=""></div>
+        <div class="hero-c">
+            <h1>LLMs in Your <em>Pocket</em></h1>
+            <p class="hero-sub">On-device AI that delivers privacy, speed, and accessibility &mdash; bringing
+                intelligence to every pocket on the planet.</p>
+            <p class="hero-site">pai-technology.com</p>
+            <div class="hero-acts">
+                <div class="mag"><a href="#market" class="btn btn-p"><svg width="16" height="16" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M5 12h14" />
+                            <path d="m12 5 7 7-7 7" />
+                        </svg> View the Pitch</a></div>
+                <a href="index.html" class="btn btn-g">Visit Product Site</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PITCH VIDEO -->
+    <section class="pitch-vid rv">
+        <div class="pitch-vid-tilt">
+            <div class="pitch-vid-card" data-tilt>
+                <video controls preload="metadata">
+                    <source src="pitch.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <!-- ANDREW NG QUOTE -->
+    <section class="quote rv">
+        <div class="w">
+            <div class="quote-card">
+                <p class="quote-text">I think on-device (edge) AI is an important technology trend that's enabling new
+                    low latency, privacy-preserving applications.</p>
+                <div class="quote-author">
+                    <div class="quote-av"><img src="andrew-ng.png" alt="Andrew Ng"></div>
+                    <div class="quote-info">
+                        <div class="quote-name">Andrew Ng</div>
+                        <div class="quote-role">Co-founder, Google Brain &amp; Coursera</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARKET SIZE -->
+    <section class="sec" id="market">
+        <div class="w">
+            <div class="sh rv">
+                <div class="sh-o">Market Opportunity</div>
+                <h2>The mobile AI economy is set for explosive growth</h2>
+                <p>Two massive, converging markets create a generational opportunity for on-device AI.</p>
+            </div>
+            <div class="stats-row rv">
+                <div class="stat-card">
+                    <div class="stat-val">$22B</div>
+                    <div class="stat-label">Mobile AI Market<br>2024</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-val">$354B</div>
+                    <div class="stat-label">Projected Market<br>by 2033</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-val">32.5%</div>
+                    <div class="stat-label">Mobile AI<br>CAGR</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-val">21%</div>
+                    <div class="stat-label">Edge AI<br>CAGR (2025-34)</div>
+                </div>
+            </div>
+
+            <!-- TAM/SAM/SOM -->
+            <div class="rv">
+                <div class="sh" style="margin-bottom:32px">
+                    <h2 style="font-size:clamp(22px,3vw,32px)">A $157B+ market waiting for disruption</h2>
+                </div>
+                <div class="tam-visual">
+                    <div class="tam-circles">
+                        <div class="tam-ring tam">
+                            <div class="tam-ring-label" style="margin-top:-40px">TAM</div>
+                            <div class="tam-ring-val">$157B</div>
+                        </div>
+                        <div class="tam-ring sam">
+                            <div class="tam-ring-label" style="margin-top:-20px">SAM</div>
+                            <div class="tam-ring-val">$50B</div>
+                        </div>
+                        <div class="tam-ring som">
+                            <div class="tam-ring-label">SOM</div>
+                            <div class="tam-ring-val">$4.45M</div>
+                        </div>
+                    </div>
+                    <div class="tam-legend">
+                        <div class="tam-leg-item">
+                            <div class="tam-dot"
+                                style="background:rgba(26,182,112,.15);border:2px solid rgba(26,182,112,.3)"></div>
+                            <div>
+                                <div class="tam-leg-title">TAM &mdash; $157B</div>
+                                <div class="tam-leg-desc">Total Addressable Market. Full Edge AI market projected by
+                                    2034.</div>
+                            </div>
+                        </div>
+                        <div class="tam-leg-item">
+                            <div class="tam-dot"
+                                style="background:rgba(26,182,112,.25);border:2px solid rgba(26,182,112,.4)"></div>
+                            <div>
+                                <div class="tam-leg-title">SAM &mdash; $50B</div>
+                                <div class="tam-leg-desc">Serviceable Addressable Market. Mobile-focused on-device AI
+                                    segment.</div>
+                            </div>
+                        </div>
+                        <div class="tam-leg-item">
+                            <div class="tam-dot" style="background:var(--em);border:2px solid var(--em)"></div>
+                            <div>
+                                <div class="tam-leg-title">SOM &mdash; $4.45M ARR</div>
+                                <div class="tam-leg-desc">Target Annual Recurring Revenue within 24 months of launch.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="rv"
+                style="text-align:center;font-family:var(--fm);font-size:11px;color:var(--gray-d);margin-top:32px;letter-spacing:.06em">
+                Source: Market.us &mdash; Edge AI Market Size &amp; Mobile AI Market Growth Projections</p>
+        </div>
+    </section>
+
+    <div class="w">
+        <div class="divider"></div>
+    </div>
+
+    <!-- DIGITAL DIVIDE -->
+    <section class="sec-alt rv">
+        <div class="w" style="text-align:center">
+            <div class="sh-o" style="margin-bottom:14px">The Digital Divide</div>
+            <h2
+                style="font-family:var(--fh);font-size:clamp(24px,3.5vw,40px);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:20px">
+                No Internet = No AI</h2>
+            <div style="display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:16px">
+                <div class="stat-card" style="flex:1;min-width:200px;max-width:300px">
+                    <div class="stat-val">2.6B</div>
+                    <div class="stat-label">People without internet access worldwide</div>
+                </div>
+                <div class="stat-card" style="flex:1;min-width:200px;max-width:300px">
+                    <div class="stat-val">96%</div>
+                    <div class="stat-label">Of the unconnected live in developing nations</div>
+                </div>
+            </div>
+            <p style="font-size:14px;color:var(--gray);max-width:500px;margin:0 auto;line-height:1.7">Approximately
+                26&ndash;32% of the world's population is left behind by cloud-only AI. PocketAI brings intelligence
+                offline.</p>
+        </div>
+    </section>
+
+    <div class="w">
+        <div class="divider"></div>
+    </div>
+
+    <!-- PROBLEM -->
+    <section class="sec" id="problem">
+        <div class="w">
+            <div class="sh rv">
+                <div class="sh-o">The Problem</div>
+                <h2>Why are current AI solutions falling short?</h2>
+            </div>
+            <div class="ps-grid rv">
+                <div class="ps-card" data-tilt>
+                    <div class="ps-ico prob"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                        </svg></div>
+                    <h3>Privacy Concerns</h3>
+                    <p>Cloud-based AI solutions send data to remote servers, risking privacy breaches and data
+                        exploitation.</p>
+                    <div class="ps-stat">66% have privacy concerns &mdash; KPMG</div>
+                </div>
+                <div class="ps-card" data-tilt>
+                    <div class="ps-ico prob"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="6" width="22" height="12" rx="2" />
+                            <line x1="7" y1="12" x2="7.01" y2="12" />
+                            <line x1="17" y1="12" x2="17.01" y2="12" />
+                            <path d="M12 6v12" />
+                        </svg></div>
+                    <h3>Inefficient On-Device AI</h3>
+                    <p>Current implementations are inefficient, causing battery drain, poor performance. Truly offline
+                        AI assistants are virtually non-existent.</p>
+                </div>
+                <div class="ps-card" data-tilt>
+                    <div class="ps-ico prob"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23" />
+                            <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+                        </svg></div>
+                    <h3>Operational Cost</h3>
+                    <p>Maintaining an AI startup costs an arm &amp; a leg &mdash; not only for founders but also for
+                        investors.</p>
+                </div>
+                <div class="ps-card" data-tilt>
+                    <div class="ps-ico prob"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="2" y1="12" x2="22" y2="12" />
+                            <path
+                                d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+                        </svg></div>
+                    <h3>Lack of Hybrid Approach</h3>
+                    <p>No solution effectively balances cloud performance with on-device privacy for sensitive tasks and
+                        data.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOLUTION -->
+    <section class="sec" id="solution">
+        <div class="w">
+            <div class="sh rv">
+                <div class="sh-o">Our Solution</div>
+                <h2>How we are solving it</h2>
+                <p>Five pillars of technology that make on-device AI actually work.</p>
+            </div>
+            <div class="pill-grid rv">
+                <div class="pill-card">
+                    <div class="pill-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" />
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                            <line x1="12" y1="22.08" x2="12" y2="12" />
+                        </svg></div>
+                    <h3>Hybrid Approach</h3>
+                    <p>Complex tasks in cloud, sensitive tasks offline for optimal performance and privacy.</p>
+                </div>
+                <div class="pill-card">
+                    <div class="pill-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg></div>
+                    <h3>Private Personalization</h3>
+                    <p>Full control over your data and LLM. 100% personalized and tailored to your needs.</p>
+                </div>
+                <div class="pill-card">
+                    <div class="pill-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="4" width="16" height="16" rx="2" />
+                            <path d="M9 9h.01" />
+                            <path d="M15 9h.01" />
+                            <path d="M9 15c.83.67 1.83 1 3 1s2.17-.33 3-1" />
+                        </svg></div>
+                    <h3>Agentic AI on Mobile</h3>
+                    <p>Intelligent AI agents running locally on iOS &amp; Android for unprecedented control.</p>
+                </div>
+                <div class="pill-card">
+                    <div class="pill-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 1l22 22" />
+                            <path d="M16.72 11.06A10.94 10.94 0 0119 12.55" />
+                            <path d="M5 12.55a10.94 10.94 0 015.17-2.39" />
+                            <path d="M8.53 16.11a6 6 0 016.95 0" />
+                            <path d="M12 20h.01" />
+                        </svg></div>
+                    <h3>Offline-First Design</h3>
+                    <p>Core functionalities without internet, with optional cloud sync when available.</p>
+                </div>
+                <div class="pill-card">
+                    <div class="pill-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                        </svg></div>
+                    <h3>Hardware Optimization</h3>
+                    <p>Custom-built for mobile GPU/NPU architectures with advanced battery management.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="w">
+        <div class="divider"></div>
+    </div>
+
+    <!-- BUSINESS MODEL -->
+    <section class="sec" id="model">
+        <div class="w">
+            <div class="sh rv">
+                <div class="sh-o">Business Model</div>
+                <h2>Three revenue streams, one platform</h2>
+                <p>Freemium gets the hype. We convert it into revenue.</p>
+            </div>
+            <div class="biz-grid rv">
+                <div class="biz-card pop">
+                    <div class="biz-tag">B2C &mdash; Freemium Model</div>
+                    <h3>Consumer App</h3>
+                    <p>Free tier with basic models and features. Premium subscription for advanced models, hybrid
+                        multi-agent AI and voice mode.</p>
+                    <div class="biz-price">$10<span>/mo</span></div>
+                </div>
+                <div class="biz-card">
+                    <div class="biz-tag">B2B &mdash; Enterprise</div>
+                    <h3>Enterprise Solutions</h3>
+                    <p>Custom hybrid AI solutions and licensing for specific industries like healthcare and defense with
+                        use cases library ready to deploy.</p>
+                    <div class="biz-price">Custom</div>
+                </div>
+                <div class="biz-card">
+                    <div class="biz-tag">B2D &mdash; SDK/API</div>
+                    <h3>Developer Platform</h3>
+                    <p>Licensing optimized on-device LLM SDK for integration into other apps and devices. Apps studio to
+                        build with local LLMs built-in.</p>
+                    <div class="biz-price">License</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="w">
+        <div class="divider"></div>
+    </div>
+
+    <!-- COMPETITIVE ADVANTAGE -->
+    <section class="sec">
+        <div class="w">
+            <div class="sh rv">
+                <div class="sh-o">Competitive Edge</div>
+                <h2>Why we win</h2>
+            </div>
+            <div class="comp-grid rv">
+                <div class="comp-card">
+                    <h3>Vertical Focus</h3>
+                    <p>Specialized features for specific use cases that generic solutions from big tech can't match.</p>
+                </div>
+                <div class="comp-card">
+                    <h3>Execution Speed</h3>
+                    <p>Rapid development cycle with proven ability to ship fast and iterate quickly.</p>
+                </div>
+                <div class="comp-card">
+                    <h3>Hybrid Architecture</h3>
+                    <p>Unique approach balancing cloud performance with on-device privacy creates a defensible
+                        technological moat.</p>
+                </div>
+                <div class="comp-card">
+                    <h3>Proprietary Optimization</h3>
+                    <p>Custom-built hardware acceleration techniques for mobile GPU/NPU architectures.</p>
+                </div>
+            </div>
+            <div class="comp-table rv">
+                <div class="comp-table-head">
+                    <span>PocketAI vs.</span>
+                    <span>Category</span>
+                    <span>Status</span>
+                </div>
+                <div class="comp-table-row">
+                    <span>Apple, Google, Samsung</span>
+                    <span>Big Tech</span>
+                    <span>No public on-device AI solution</span>
+                </div>
+                <div class="comp-table-row">
+                    <span>MLC.ai, Ollama, Hugging Face</span>
+                    <span>Open Source</span>
+                    <span>Dev tools only, no consumer product</span>
+                </div>
+                <div class="comp-table-row">
+                    <span>ChatGPT, Gemini, Claude, Manus</span>
+                    <span>Cloud AI</span>
+                    <span>Cloud-only, zero offline capability</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="w">
+        <div class="divider"></div>
+    </div>
+
+    <!-- ROADMAP -->
+    <section class="sec">
+        <div class="w">
+            <div class="sh rv">
+                <div class="sh-o">Roadmap</div>
+                <h2>Building momentum</h2>
+            </div>
+            <div class="road-row rv">
+                <div class="road-item">
+                    <div class="road-tag">Last 3 months</div>
+                    <div class="road-dot done"></div>
+                    <h3>MVP Built &amp; Tested</h3>
+                    <p>Tested across +1,200 devices. Core engine validated and optimized.</p>
+                </div>
+                <div class="road-item">
+                    <div class="road-tag">Current</div>
+                    <div class="road-dot cur"></div>
+                    <h3>Beta Release</h3>
+                    <p>Hybrid approach live. 1,500+ beta users onboarded and testing.</p>
+                </div>
+                <div class="road-item">
+                    <div class="road-tag">+3 months</div>
+                    <div class="road-dot"></div>
+                    <h3>Waitlist Launch</h3>
+                    <p>Agentic AI for mobile. Multi-agent system goes live to waitlist.</p>
+                </div>
+                <div class="road-item">
+                    <div class="road-tag">+6 months</div>
+                    <div class="road-dot"></div>
+                    <h3>GPU &amp; Battery</h3>
+                    <p>Advanced GPU and battery optimizations. Production-grade performance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="w">
+        <div class="divider"></div>
+    </div>
+
+    <!-- TEAM -->
+    <section class="sec" id="team">
+        <div class="w">
+            <div class="sh rv">
+                <div class="sh-o">Team</div>
+                <h2>Who's building this</h2>
+            </div>
+            <div class="team-card rv">
+                <div class="team-av"><img src="mounsef.jpg" alt="Mounsef Litniti"></div>
+                <div class="team-info">
+                    <h3>Mounsef Litniti</h3>
+                    <div class="team-role">Founder &amp; CEO</div>
+                    <p>GenAI Consultant &amp; Advisor in AI Strategy, Organizational Digital Transformation &amp;
+                        Business Innovation. Building the next YC and Silicon Valley level startup from Morocco.</p>
+                    <div class="team-clients">
+                        <span>Holmarcom</span>
+                        <span>Dislog Group</span>
+                        <span>OCP</span>
+                        <span>UM6P</span>
+                        <span>MIT Labs</span>
+                    </div>
+                </div>
+            </div>
+            <div class="team-metrics rv">
+                <div class="tm-item">
+                    <div class="tm-val">6mo</div>
+                    <div class="tm-label">Collaborating with R&amp;D labs</div>
+                </div>
+                <div class="tm-item">
+                    <div class="tm-val">20+</div>
+                    <div class="tm-label">UM6P &amp; MIT researchers</div>
+                </div>
+                <div class="tm-item">
+                    <div class="tm-val">IP</div>
+                    <div class="tm-label">Registered intellectual property</div>
+                </div>
+                <div class="tm-item">
+                    <div class="tm-val">18+</div>
+                    <div class="tm-label">Team members &amp; collaborators</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="w">
+        <div class="divider"></div>
+    </div>
+
+    <!-- THE ASK -->
+    <section class="sec">
+        <div class="w">
+            <div class="sh rv">
+                <div class="sh-o">The Ask</div>
+                <h2>What we need to accelerate</h2>
+                <p>We see Gitex Africa as the perfect launch pad for our app.</p>
+            </div>
+            <div class="ask-grid rv">
+                <div class="ask-card">
+                    <div class="ask-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14V10z" />
+                            <rect x="3" y="6" width="12" height="12" rx="2" />
+                        </svg></div>
+                    <h3>Startup Booth</h3>
+                    <p>Gitex Africa x SuperNova Acceptance &mdash; join the next 300 startups to accelerate growth and
+                        connect with the ecosystem.</p>
+                </div>
+                <div class="ask-card">
+                    <div class="ask-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                            <path d="M16 3.13a4 4 0 010 7.75" />
+                        </svg></div>
+                    <h3>Network Access</h3>
+                    <p>Access to Gitex's unparalleled network of founders, investors, and industry experts to scale
+                        globally.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-s" id="cta">
+        <h2 class="rv">Let's make AI reach<br>every <em>Moroccan pocket</em></h2>
+        <p class="rv d1">PocketAI is building the future of private, on-device AI &mdash; and we're just getting
+            started.</p>
+        <div class="cta-acts rv d2">
+            <div class="mag"><a href="mailto:contact@pai-technology.com" class="btn btn-p"><svg width="16" height="16"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
+                    </svg> Get in Touch</a></div>
+            <a href="index.html" class="btn btn-g">Visit Our Website</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="ft-mini">
+        <div class="w">
+            <p>&copy; 2026 PocketAI Technologies. All rights reserved. &mdash; <a href="index.html"
+                    style="color:var(--em)">pai-technology.com</a></p>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            // Cursor
+            const C = document.getElementById('cur'), D = document.getElementById('curD');
+            let cx = 0, cy = 0, dx = 0, dy = 0;
+            document.addEventListener('mousemove', e => { dx = e.clientX; dy = e.clientY; D.style.left = dx + 'px'; D.style.top = dy + 'px' });
+            (function lp() { cx += (dx - cx) * .1; cy += (dy - cy) * .1; C.style.left = cx + 'px'; C.style.top = cy + 'px'; requestAnimationFrame(lp) })();
+            document.querySelectorAll('a,button,.btn').forEach(el => { el.addEventListener('mouseenter', () => C.classList.add('h')); el.addEventListener('mouseleave', () => C.classList.remove('h')) });
+
+            // 3D tilt
+            document.querySelectorAll('[data-tilt]').forEach(el => {
+                el.addEventListener('mousemove', e => { const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height; el.style.transform = `perspective(900px) rotateX(${(y - .5) * -7}deg) rotateY(${(x - .5) * 7}deg) scale3d(1.01,1.01,1.01)`; el.style.setProperty('--mx', x * 100 + '%'); el.style.setProperty('--my', y * 100 + '%') });
+                el.addEventListener('mouseleave', () => { el.style.transform = '' });
+            });
+
+            // Magnetic
+            document.querySelectorAll('.mag').forEach(w => {
+                const b = w.querySelector('.btn');
+                w.addEventListener('mousemove', e => { const r = w.getBoundingClientRect(); b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .2}px,${(e.clientY - r.top - r.height / 2) * .2}px)` });
+                w.addEventListener('mouseleave', () => { b.style.transform = '' });
+            });
+
+            // Reveals
+            const rO = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis') }) }, { threshold: .08, rootMargin: '0px 0px -30px 0px' });
+            document.querySelectorAll('.rv').forEach(e => rO.observe(e));
+
+            // Nav
+            window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 50));
+
+            // Blob parallax
+            const blobs = document.querySelectorAll('.bl'); let tk = false;
+            window.addEventListener('scroll', () => { if (!tk) { requestAnimationFrame(() => { const s = scrollY; blobs[0].style.transform = `translate(${Math.sin(s * .002) * 30}px,${s * -.1}px)`; blobs[1].style.transform = `translate(${Math.cos(s * .0015) * 20}px,${s * -.06}px)`; blobs[2].style.transform = `translate(${Math.sin(s * .001) * 15}px,${s * -.04}px)`; tk = false }); tk = true } });
+
+            // Smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(a => { a.addEventListener('click', e => { e.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }) }) });
+        })();
+    </script>
+</body>
+
+</html>
