@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>PocketAI — Privacy Policy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    :root {
+      --black: #000;
+      --c1: #070707;
+      --c2: #0e0e0e;
+      --c3: #161616;
+      --c4: #1c1c1c;
+      --forest: #01693F;
+      --em: #1AB670;
+      --em2: #10B981;
+      --em-lt: #1EAA73;
+      --sage: #008851;
+      --white: #fff;
+      --w2: #e8e8e8;
+      --gray: #9ca3af;
+      --gray-d: #5a5f6b;
+      --gray-f: #252525;
+      --glow: rgba(26, 182, 112, .16);
+      --glow-s: rgba(26, 182, 112, .06);
+      --gl: rgba(255, 255, 255, .025);
+      --gl-h: rgba(255, 255, 255, .045);
+      --gl-b: rgba(255, 255, 255, .06);
+      --gl-b2: rgba(255, 255, 255, .1);
+      --r: 14px;
+      --rl: 22px;
+      --fh: 'Montserrat', sans-serif;
+      --fb: 'Montserrat', sans-serif;
+      --fm: 'JetBrains Mono', monospace
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--fb);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: .035
+    }
+
+    body::after {
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px
+    }
+
+    a {
+      color: var(--em);
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    a:hover {
+      color: var(--em-lt)
+    }
+
+    ::selection {
+      background: var(--glow);
+      color: var(--white)
+    }
+
+    /* Cursor */
+    .cur,
+    .cur-d {
+      position: fixed;
+      pointer-events: none;
+      z-index: 100000;
+      border-radius: 50%;
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -50%)
+    }
+
+    .cur {
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid var(--em);
+      transition: width .25s, height .25s, border-color .25s;
+      mix-blend-mode: difference
+    }
+
+    .cur.h {
+      width: 52px;
+      height: 52px;
+      border-color: var(--em2)
+    }
+
+    .cur-d {
+      width: 5px;
+      height: 5px;
+      background: var(--em);
+      transition: opacity .2s
+    }
+
+    @media(max-width:1024px) {
+
+      .cur,
+      .cur-d {
+        display: none !important
+      }
+    }
+
+    /* Blobs */
+    .bl {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: 0;
+      pointer-events: none;
+      will-change: transform
+    }
+
+    .bl-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(26, 182, 112, .12), transparent 70%);
+      top: -10%;
+      left: -10%
+    }
+
+    .bl-2 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(1, 105, 63, .1), transparent 70%);
+      top: 40%;
+      right: -8%
+    }
+
+    .bl-3 {
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(0, 136, 81, .08), transparent 70%);
+      bottom: -5%;
+      left: 30%
+    }
+
+    /* Nav */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10000;
+      padding: 18px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all .4s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .nav.scrolled {
+      background: rgba(7, 7, 7, .82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--gl-b);
+      padding: 12px 48px
+    }
+
+    .logo {
+      font-family: var(--fh);
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: -.03em;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 2px
+    }
+
+    .logo em {
+      font-style: normal;
+      color: var(--em);
+      font-weight: 800
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px
+    }
+
+    .nav-links a {
+      color: var(--gray);
+      font-size: .875rem;
+      font-weight: 500;
+      transition: color .25s;
+      letter-spacing: -.01em
+    }
+
+    .nav-links a:hover {
+      color: var(--white)
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--fb);
+      font-weight: 600;
+      font-size: .875rem;
+      padding: 10px 24px;
+      border-radius: var(--r);
+      cursor: pointer;
+      transition: all .3s cubic-bezier(.4, 0, .2, 1);
+      border: none;
+      letter-spacing: -.01em;
+      text-decoration: none
+    }
+
+    .btn-p {
+      background: var(--em);
+      color: var(--black);
+      box-shadow: 0 0 20px var(--glow)
+    }
+
+    .btn-p:hover {
+      background: var(--em-lt);
+      box-shadow: 0 0 30px var(--glow);
+      transform: translateY(-1px)
+    }
+
+    .btn-g {
+      background: transparent;
+      color: var(--em);
+      border: 1.5px solid var(--em)
+    }
+
+    .btn-g:hover {
+      background: var(--em);
+      color: var(--black);
+      box-shadow: 0 0 25px var(--glow)
+    }
+
+    .btn-sm {
+      padding: 8px 18px;
+      font-size: .8rem
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 10001;
+      background: none;
+      border: none;
+      padding: 4px
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all .3s
+    }
+
+    /* Reveal */
+    .rv {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .7s cubic-bezier(.4, 0, .2, 1), transform .7s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .rv.vis {
+      opacity: 1;
+      transform: none
+    }
+
+    .d1 {
+      transition-delay: .1s
+    }
+
+    .d2 {
+      transition-delay: .2s
+    }
+
+    .d3 {
+      transition-delay: .3s
+    }
+
+    .d4 {
+      transition-delay: .4s
+    }
+
+    .d5 {
+      transition-delay: .5s
+    }
+
+    /* Page Hero */
+    .page-hero {
+      position: relative;
+      padding: 180px 48px 80px;
+      text-align: center;
+      overflow: hidden
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(26, 182, 112, .08) 0%, transparent 65%);
+      pointer-events: none
+    }
+
+    .page-hero h1 {
+      font-family: var(--fh);
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 800;
+      letter-spacing: -.04em;
+      line-height: 1.1;
+      margin-bottom: 16px
+    }
+
+    .page-hero h1 span {
+      background: linear-gradient(135deg, var(--em), var(--em2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text
+    }
+
+    .page-hero .updated {
+      font-family: var(--fm);
+      font-size: .85rem;
+      color: var(--gray);
+      letter-spacing: .02em
+    }
+
+    /* Legal Content */
+    .legal-wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 48px 100px
+    }
+
+    .legal-card {
+      background: rgba(14, 14, 14, .55);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--gl-b);
+      border-radius: var(--rl);
+      padding: 56px 64px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, .3)
+    }
+
+    .legal-card h3 {
+      font-family: var(--fh);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--white);
+      margin: 40px 0 16px;
+      letter-spacing: -.02em;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--gl-b)
+    }
+
+    .legal-card h3:first-child {
+      margin-top: 0
+    }
+
+    .legal-card p {
+      color: var(--gray);
+      font-size: .935rem;
+      margin-bottom: 16px;
+      line-height: 1.8
+    }
+
+    .legal-card ul {
+      color: var(--gray);
+      font-size: .935rem;
+      margin: 0 0 16px 24px;
+      line-height: 1.9
+    }
+
+    .legal-card li {
+      margin-bottom: 6px
+    }
+
+    .legal-card strong {
+      color: var(--w2);
+      font-weight: 600
+    }
+
+    .legal-card a {
+      color: var(--em);
+      text-decoration: underline;
+      text-underline-offset: 3px
+    }
+
+    .legal-card .highlight-box {
+      background: var(--glow-s);
+      border: 1px solid rgba(26, 182, 112, .15);
+      border-radius: var(--r);
+      padding: 20px 24px;
+      margin: 20px 0;
+      color: var(--w2);
+      font-size: .92rem
+    }
+
+    .legal-card .highlight-box svg {
+      vertical-align: middle;
+      margin-right: 8px
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--gl-b);
+      padding: 72px 48px 32px;
+      position: relative;
+      z-index: 2
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr repeat(3, 1fr) 1.3fr;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto
+    }
+
+    .footer-brand p {
+      color: var(--gray);
+      font-size: .85rem;
+      line-height: 1.7;
+      margin: 16px 0
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px
+    }
+
+    .footer-social a {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--gl-b2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .3s;
+      color: var(--gray)
+    }
+
+    .footer-social a:hover {
+      border-color: var(--em);
+      color: var(--em);
+      background: var(--glow-s)
+    }
+
+    .footer-social a svg {
+      width: 16px;
+      height: 16px
+    }
+
+    .footer-col h4 {
+      font-family: var(--fh);
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--white);
+      margin-bottom: 18px
+    }
+
+    .footer-col a {
+      display: block;
+      color: var(--gray);
+      font-size: .85rem;
+      margin-bottom: 10px;
+      transition: color .2s
+    }
+
+    .footer-col a:hover {
+      color: var(--em)
+    }
+
+    .nl-input {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px
+    }
+
+    .nl-input input {
+      flex: 1;
+      background: var(--c3);
+      border: 1px solid var(--gl-b2);
+      border-radius: var(--r);
+      padding: 10px 14px;
+      color: var(--white);
+      font-family: var(--fb);
+      font-size: .85rem;
+      outline: none;
+      transition: border-color .3s
+    }
+
+    .nl-input input::placeholder {
+      color: var(--gray-d)
+    }
+
+    .nl-input input:focus {
+      border-color: var(--em)
+    }
+
+    .nl-input button {
+      padding: 10px 16px;
+      background: var(--em);
+      border: none;
+      border-radius: var(--r);
+      cursor: pointer;
+      transition: background .3s;
+      display: flex;
+      align-items: center
+    }
+
+    .nl-input button:hover {
+      background: var(--em-lt)
+    }
+
+    .nl-input button svg {
+      width: 16px;
+      height: 16px
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 48px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid var(--gl-b);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px
+    }
+
+    .footer-bottom p {
+      color: var(--gray-d);
+      font-size: .78rem
+    }
+
+    .footer-bottom .f-links {
+      display: flex;
+      gap: 20px
+    }
+
+    .footer-bottom .f-links a {
+      color: var(--gray-d);
+      font-size: .78rem;
+      transition: color .2s
+    }
+
+    .footer-bottom .f-links a:hover {
+      color: var(--em)
+    }
+
+    /* Mobile */
+    @media(max-width:1024px) {
+      .nav {
+        padding: 16px 28px
+      }
+
+      .nav.scrolled {
+        padding: 12px 28px
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background: rgba(7, 7, 7, .96);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        justify-content: center;
+        gap: 24px;
+        padding: 40px;
+        transition: right .35s cubic-bezier(.4, 0, .2, 1);
+        border-left: 1px solid var(--gl-b)
+      }
+
+      .nav-links.open {
+        right: 0
+      }
+
+      .hamburger {
+        display: flex
+      }
+
+      .page-hero {
+        padding: 140px 24px 60px
+      }
+
+      .legal-wrap {
+        padding: 0 24px 80px
+      }
+
+      .legal-card {
+        padding: 36px 32px
+      }
+
+      .footer {
+        padding: 48px 24px 24px
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px
+      }
+    }
+
+    @media(max-width:768px) {
+      .footer-grid {
+        grid-template-columns: 1fr
+      }
+
+      .legal-card {
+        padding: 28px 22px
+      }
+    }
+
+    @media(max-width:480px) {
+      .page-hero h1 {
+        font-size: 2rem
+      }
+
+      .legal-card {
+        padding: 24px 18px;
+        border-radius: var(--r)
+      }
+
+      .nl-input {
+        flex-direction: column
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Cursor -->
+  <div class="cur" id="cur"></div>
+  <div class="cur-d" id="curD"></div>
+
+  <!-- Blobs -->
+  <div class="bl bl-1"></div>
+  <div class="bl bl-2"></div>
+  <div class="bl bl-3"></div>
+
+  <!-- Nav -->
+  <nav class="nav" id="nav">
+    <a href="index.html" class="logo">Pocket<em>AI</em></a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#how">How It Works</a>
+      <a href="index.html#solutions">Solutions</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="pitch.html">Pitch</a>
+      <a href="index.html#get-started" class="btn btn-g btn-sm">Get Started</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <h1 class="rv"><span>Privacy Policy</span></h1>
+    <p class="updated rv d1">Last Updated: March 1, 2026</p>
+  </section>
+
+  <!-- Legal Content -->
+  <div class="legal-wrap">
+    <div class="legal-card rv d2">
+
+      <h3>1. Information We Collect</h3>
+      <p>At PocketAI Technologies ("PocketAI," "we," "our," or "us"), we are committed to protecting your privacy. This
+        Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile
+        application, website, and related services (collectively, the "Service").</p>
+      <p>We may collect the following categories of information:</p>
+      <ul>
+        <li><strong>Account Information:</strong> When you create an account, we collect your name, email address, and
+          encrypted password. If you subscribe to a paid plan, we collect billing information through our secure
+          third-party payment processor.</li>
+        <li><strong>Device Information:</strong> We collect device type, operating system version, unique device
+          identifiers, and general hardware specifications to optimize on-device AI performance.</li>
+        <li><strong>Usage Data:</strong> We collect anonymized usage statistics such as feature usage frequency, session
+          duration, and interaction patterns to improve the Service. This data is aggregated and cannot be used to
+          identify you personally.</li>
+        <li><strong>Support Communications:</strong> If you contact our support team, we retain correspondence to
+          resolve your inquiries and improve our support processes.</li>
+      </ul>
+
+      <h3>2. How We Use Your Information</h3>
+      <p>We use the information we collect to:</p>
+      <ul>
+        <li>Provide, maintain, and improve the Service</li>
+        <li>Process transactions and manage your subscription</li>
+        <li>Send you technical notices, updates, and security alerts</li>
+        <li>Respond to your comments, questions, and customer service requests</li>
+        <li>Monitor and analyze usage trends to improve user experience</li>
+        <li>Detect, prevent, and address technical issues and fraudulent activity</li>
+        <li>Comply with legal obligations and enforce our Terms of Service</li>
+      </ul>
+      <p>We will never sell your personal information to third parties. We do not use your personal data for advertising
+        purposes.</p>
+
+      <h3>3. On-Device Processing</h3>
+      <div class="highlight-box">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1AB670" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
+        <strong>Your data stays on your device by default.</strong> PocketAI's core AI engine runs entirely on-device.
+        Your conversations, documents, and personal data are processed locally and are never transmitted to external
+        servers unless you explicitly enable cloud-based features.
+      </div>
+      <p>PocketAI is architected with a privacy-first approach. Our on-device AI models perform inference directly on
+        your smartphone or tablet, meaning:</p>
+      <ul>
+        <li><strong>No Cloud Dependency:</strong> Your queries and AI responses are generated locally. No internet
+          connection is required for core functionality.</li>
+        <li><strong>No Data Harvesting:</strong> We do not collect, store, or analyze the content of your AI
+          interactions unless you explicitly opt in to optional cloud features.</li>
+        <li><strong>Full User Control:</strong> You retain complete control over your data at all times. You can delete
+          all locally stored data directly from the app settings.</li>
+        <li><strong>Optional Cloud Sync:</strong> If you choose to enable cloud synchronization, your data is encrypted
+          end-to-end before transmission. Only you hold the decryption keys.</li>
+      </ul>
+
+      <h3>4. Data Storage & Security</h3>
+      <p>We implement industry-standard security measures to protect your information, including:</p>
+      <ul>
+        <li><strong>Encryption at Rest:</strong> All data stored on your device is encrypted using AES-256 encryption.
+        </li>
+        <li><strong>Encryption in Transit:</strong> Any data transmitted to our servers (for account management or
+          optional cloud features) is protected using TLS 1.3 encryption.</li>
+        <li><strong>Access Controls:</strong> We maintain strict access controls and conduct regular security audits of
+          our infrastructure.</li>
+        <li><strong>Data Minimization:</strong> We collect only the minimum amount of data necessary to provide and
+          improve the Service.</li>
+      </ul>
+      <p>While we strive to use commercially acceptable means to protect your personal information, no method of
+        electronic storage or transmission over the Internet is 100% secure. We cannot guarantee absolute security, but
+        we are committed to promptly notifying affected users in the event of a data breach.</p>
+
+      <h3>5. Third-Party Services</h3>
+      <p>We may employ third-party companies and services to facilitate specific functions, including:</p>
+      <ul>
+        <li><strong>Payment Processing:</strong> We use Stripe to process subscription payments. Stripe's privacy policy
+          governs their collection and use of your payment information.</li>
+        <li><strong>Analytics:</strong> We use privacy-focused analytics tools to collect anonymized, aggregated usage
+          data. These tools do not track individual users or collect personally identifiable information.</li>
+        <li><strong>Infrastructure:</strong> Our account management servers are hosted on secure, SOC 2-compliant cloud
+          infrastructure.</li>
+      </ul>
+      <p>We do not share your personal information with these third parties beyond what is necessary for them to perform
+        their designated services.</p>
+
+      <h3>6. Your Rights</h3>
+      <p>Depending on your jurisdiction, you may have the following rights regarding your personal data:</p>
+      <ul>
+        <li><strong>Right to Access:</strong> You may request a copy of the personal information we hold about you.</li>
+        <li><strong>Right to Rectification:</strong> You may request that we correct inaccurate or incomplete personal
+          information.</li>
+        <li><strong>Right to Erasure:</strong> You may request that we delete your personal information, subject to
+          certain legal exceptions.</li>
+        <li><strong>Right to Data Portability:</strong> You may request your data in a structured, commonly used,
+          machine-readable format.</li>
+        <li><strong>Right to Withdraw Consent:</strong> Where processing is based on consent, you may withdraw your
+          consent at any time.</li>
+        <li><strong>Right to Object:</strong> You may object to the processing of your personal information for certain
+          purposes.</li>
+      </ul>
+      <p>To exercise any of these rights, please contact us at <a
+          href="mailto:privacy@pai-technology.com">privacy@pai-technology.com</a>. We will respond to your request
+        within 30 days.</p>
+
+      <h3>7. Children's Privacy</h3>
+      <p>The Service is not intended for use by individuals under the age of 13 (or the applicable age of digital
+        consent in your jurisdiction). We do not knowingly collect personal information from children under 13. If we
+        become aware that we have inadvertently collected personal information from a child under 13, we will take
+        immediate steps to delete such information from our records.</p>
+      <p>If you are a parent or guardian and believe that your child has provided us with personal information, please
+        contact us at <a href="mailto:privacy@pai-technology.com">privacy@pai-technology.com</a> so that we can take
+        appropriate action.</p>
+
+      <h3>8. Changes to This Policy</h3>
+      <p>We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal
+        requirements, or other factors. When we make material changes, we will notify you by:</p>
+      <ul>
+        <li>Posting the updated policy on our website with a revised "Last Updated" date</li>
+        <li>Sending a notification through the PocketAI app</li>
+        <li>Sending an email to the address associated with your account (for material changes)</li>
+      </ul>
+      <p>We encourage you to review this Privacy Policy periodically to stay informed about how we are protecting your
+        information. Your continued use of the Service after any changes constitutes your acceptance of the updated
+        policy.</p>
+
+      <h3>9. Contact Us</h3>
+      <p>If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please
+        contact us:</p>
+      <ul>
+        <li><strong>Email:</strong> <a href="mailto:privacy@pai-technology.com">privacy@pai-technology.com</a></li>
+        <li><strong>Company:</strong> PocketAI Technologies</li>
+      </ul>
+      <p>We take all privacy inquiries seriously and will endeavor to address your concerns promptly and thoroughly.</p>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">Pocket<em>AI</em></div>
+        <p>On-device AI that works everywhere. Private, fast, and always available.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+            </svg></a>
+          <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+            </svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+              <rect x="2" y="9" width="4" height="12" />
+              <circle cx="4" cy="4" r="2" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="index.html#features">Features</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="index.html#how">How It Works</a>
+        <a href="sdk.html">SDK</a>
+        <a href="changelog.html">Changelog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Solutions</h4>
+        <a href="individuals.html">For Individuals</a>
+        <a href="developers.html">For Developers</a>
+        <a href="enterprise.html">For Enterprise</a>
+        <a href="healthcare.html">Healthcare</a>
+        <a href="defense.html">Defense</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="careers.html">Careers</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Newsletter</h4>
+        <p style="color:var(--gray);font-size:.85rem;margin-bottom:12px">Stay updated with the latest from PocketAI.</p>
+        <div class="nl-input">
+          <input type="email" placeholder="Enter your email">
+          <button aria-label="Subscribe"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 PocketAI Technologies. All rights reserved.</p>
+      <div class="f-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="cookies.html">Cookie Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const C = document.getElementById('cur'), D = document.getElementById('curD'); let cx = 0, cy = 0, dx = 0, dy = 0;
+      document.addEventListener('mousemove', e => { dx = e.clientX; dy = e.clientY; D.style.left = dx + 'px'; D.style.top = dy + 'px' });
+      (function lp() { cx += (dx - cx) * .1; cy += (dy - cy) * .1; C.style.left = cx + 'px'; C.style.top = cy + 'px'; requestAnimationFrame(lp) })();
+      document.querySelectorAll('a,button,.btn').forEach(el => { el.addEventListener('mouseenter', () => C.classList.add('h')); el.addEventListener('mouseleave', () => C.classList.remove('h')) });
+      document.querySelectorAll('[data-tilt]').forEach(el => { el.addEventListener('mousemove', e => { const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height; el.style.transform = `perspective(900px) rotateX(${(y - .5) * -7}deg) rotateY(${(x - .5) * 7}deg) scale3d(1.01,1.01,1.01)`; el.style.setProperty('--mx', x * 100 + '%'); el.style.setProperty('--my', y * 100 + '%') }); el.addEventListener('mouseleave', () => { el.style.transform = '' }) });
+      document.querySelectorAll('.mag').forEach(w => { const b = w.querySelector('.btn'); w.addEventListener('mousemove', e => { const r = w.getBoundingClientRect(); b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .2}px,${(e.clientY - r.top - r.height / 2) * .2}px)` }); w.addEventListener('mouseleave', () => { b.style.transform = '' }) });
+      const rO = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis') }) }, { threshold: .08, rootMargin: '0px 0px -30px 0px' });
+      document.querySelectorAll('.rv').forEach(e => rO.observe(e));
+      window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 50));
+      const blobs = document.querySelectorAll('.bl'); let tk = false;
+      window.addEventListener('scroll', () => { if (!tk) { requestAnimationFrame(() => { const s = scrollY; blobs[0].style.transform = `translate(${Math.sin(s * .002) * 30}px,${s * -.1}px)`; blobs[1].style.transform = `translate(${Math.cos(s * .0015) * 20}px,${s * -.06}px)`; blobs[2].style.transform = `translate(${Math.sin(s * .001) * 15}px,${s * -.04}px)`; tk = false }); tk = true } });
+      document.querySelectorAll('a[href^="#"]').forEach(a => { a.addEventListener('click', e => { e.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }) }) });
+    })();
+    // Hamburger
+    document.getElementById('hamburger').addEventListener('click', function () { document.getElementById('navLinks').classList.toggle('open'); });
+  </script>
+</body>
+
+</html>

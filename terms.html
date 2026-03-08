@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>PocketAI — Terms of Service</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    :root {
+      --black: #000;
+      --c1: #070707;
+      --c2: #0e0e0e;
+      --c3: #161616;
+      --c4: #1c1c1c;
+      --forest: #01693F;
+      --em: #1AB670;
+      --em2: #10B981;
+      --em-lt: #1EAA73;
+      --sage: #008851;
+      --white: #fff;
+      --w2: #e8e8e8;
+      --gray: #9ca3af;
+      --gray-d: #5a5f6b;
+      --gray-f: #252525;
+      --glow: rgba(26, 182, 112, .16);
+      --glow-s: rgba(26, 182, 112, .06);
+      --gl: rgba(255, 255, 255, .025);
+      --gl-h: rgba(255, 255, 255, .045);
+      --gl-b: rgba(255, 255, 255, .06);
+      --gl-b2: rgba(255, 255, 255, .1);
+      --r: 14px;
+      --rl: 22px;
+      --fh: 'Montserrat', sans-serif;
+      --fb: 'Montserrat', sans-serif;
+      --fm: 'JetBrains Mono', monospace
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--fb);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: .035
+    }
+
+    body::after {
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px
+    }
+
+    a {
+      color: var(--em);
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    a:hover {
+      color: var(--em-lt)
+    }
+
+    ::selection {
+      background: var(--glow);
+      color: var(--white)
+    }
+
+    /* Cursor */
+    .cur,
+    .cur-d {
+      position: fixed;
+      pointer-events: none;
+      z-index: 100000;
+      border-radius: 50%;
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -50%)
+    }
+
+    .cur {
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid var(--em);
+      transition: width .25s, height .25s, border-color .25s;
+      mix-blend-mode: difference
+    }
+
+    .cur.h {
+      width: 52px;
+      height: 52px;
+      border-color: var(--em2)
+    }
+
+    .cur-d {
+      width: 5px;
+      height: 5px;
+      background: var(--em);
+      transition: opacity .2s
+    }
+
+    @media(max-width:1024px) {
+
+      .cur,
+      .cur-d {
+        display: none !important
+      }
+    }
+
+    /* Blobs */
+    .bl {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: 0;
+      pointer-events: none;
+      will-change: transform
+    }
+
+    .bl-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(26, 182, 112, .12), transparent 70%);
+      top: -10%;
+      left: -10%
+    }
+
+    .bl-2 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(1, 105, 63, .1), transparent 70%);
+      top: 40%;
+      right: -8%
+    }
+
+    .bl-3 {
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(0, 136, 81, .08), transparent 70%);
+      bottom: -5%;
+      left: 30%
+    }
+
+    /* Nav */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10000;
+      padding: 18px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all .4s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .nav.scrolled {
+      background: rgba(7, 7, 7, .82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--gl-b);
+      padding: 12px 48px
+    }
+
+    .logo {
+      font-family: var(--fh);
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: -.03em;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 2px
+    }
+
+    .logo em {
+      font-style: normal;
+      color: var(--em);
+      font-weight: 800
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px
+    }
+
+    .nav-links a {
+      color: var(--gray);
+      font-size: .875rem;
+      font-weight: 500;
+      transition: color .25s;
+      letter-spacing: -.01em
+    }
+
+    .nav-links a:hover {
+      color: var(--white)
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--fb);
+      font-weight: 600;
+      font-size: .875rem;
+      padding: 10px 24px;
+      border-radius: var(--r);
+      cursor: pointer;
+      transition: all .3s cubic-bezier(.4, 0, .2, 1);
+      border: none;
+      letter-spacing: -.01em;
+      text-decoration: none
+    }
+
+    .btn-p {
+      background: var(--em);
+      color: var(--black);
+      box-shadow: 0 0 20px var(--glow)
+    }
+
+    .btn-p:hover {
+      background: var(--em-lt);
+      box-shadow: 0 0 30px var(--glow);
+      transform: translateY(-1px)
+    }
+
+    .btn-g {
+      background: transparent;
+      color: var(--em);
+      border: 1.5px solid var(--em)
+    }
+
+    .btn-g:hover {
+      background: var(--em);
+      color: var(--black);
+      box-shadow: 0 0 25px var(--glow)
+    }
+
+    .btn-sm {
+      padding: 8px 18px;
+      font-size: .8rem
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 10001;
+      background: none;
+      border: none;
+      padding: 4px
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all .3s
+    }
+
+    /* Reveal */
+    .rv {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .7s cubic-bezier(.4, 0, .2, 1), transform .7s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .rv.vis {
+      opacity: 1;
+      transform: none
+    }
+
+    .d1 {
+      transition-delay: .1s
+    }
+
+    .d2 {
+      transition-delay: .2s
+    }
+
+    .d3 {
+      transition-delay: .3s
+    }
+
+    .d4 {
+      transition-delay: .4s
+    }
+
+    .d5 {
+      transition-delay: .5s
+    }
+
+    /* Page Hero */
+    .page-hero {
+      position: relative;
+      padding: 180px 48px 80px;
+      text-align: center;
+      overflow: hidden
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(26, 182, 112, .08) 0%, transparent 65%);
+      pointer-events: none
+    }
+
+    .page-hero h1 {
+      font-family: var(--fh);
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 800;
+      letter-spacing: -.04em;
+      line-height: 1.1;
+      margin-bottom: 16px
+    }
+
+    .page-hero h1 span {
+      background: linear-gradient(135deg, var(--em), var(--em2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text
+    }
+
+    .page-hero .updated {
+      font-family: var(--fm);
+      font-size: .85rem;
+      color: var(--gray);
+      letter-spacing: .02em
+    }
+
+    /* Legal Content */
+    .legal-wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 48px 100px
+    }
+
+    .legal-card {
+      background: rgba(14, 14, 14, .55);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--gl-b);
+      border-radius: var(--rl);
+      padding: 56px 64px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, .3)
+    }
+
+    .legal-card h3 {
+      font-family: var(--fh);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--white);
+      margin: 40px 0 16px;
+      letter-spacing: -.02em;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--gl-b)
+    }
+
+    .legal-card h3:first-child {
+      margin-top: 0
+    }
+
+    .legal-card p {
+      color: var(--gray);
+      font-size: .935rem;
+      margin-bottom: 16px;
+      line-height: 1.8
+    }
+
+    .legal-card ul,
+    .legal-card ol {
+      color: var(--gray);
+      font-size: .935rem;
+      margin: 0 0 16px 24px;
+      line-height: 1.9
+    }
+
+    .legal-card li {
+      margin-bottom: 6px
+    }
+
+    .legal-card strong {
+      color: var(--w2);
+      font-weight: 600
+    }
+
+    .legal-card a {
+      color: var(--em);
+      text-decoration: underline;
+      text-underline-offset: 3px
+    }
+
+    .legal-card .highlight-box {
+      background: var(--glow-s);
+      border: 1px solid rgba(26, 182, 112, .15);
+      border-radius: var(--r);
+      padding: 20px 24px;
+      margin: 20px 0;
+      color: var(--w2);
+      font-size: .92rem
+    }
+
+    .legal-card .highlight-box svg {
+      vertical-align: middle;
+      margin-right: 8px
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--gl-b);
+      padding: 72px 48px 32px;
+      position: relative;
+      z-index: 2
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr repeat(3, 1fr) 1.3fr;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto
+    }
+
+    .footer-brand p {
+      color: var(--gray);
+      font-size: .85rem;
+      line-height: 1.7;
+      margin: 16px 0
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px
+    }
+
+    .footer-social a {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--gl-b2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .3s;
+      color: var(--gray)
+    }
+
+    .footer-social a:hover {
+      border-color: var(--em);
+      color: var(--em);
+      background: var(--glow-s)
+    }
+
+    .footer-social a svg {
+      width: 16px;
+      height: 16px
+    }
+
+    .footer-col h4 {
+      font-family: var(--fh);
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--white);
+      margin-bottom: 18px
+    }
+
+    .footer-col a {
+      display: block;
+      color: var(--gray);
+      font-size: .85rem;
+      margin-bottom: 10px;
+      transition: color .2s
+    }
+
+    .footer-col a:hover {
+      color: var(--em)
+    }
+
+    .nl-input {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px
+    }
+
+    .nl-input input {
+      flex: 1;
+      background: var(--c3);
+      border: 1px solid var(--gl-b2);
+      border-radius: var(--r);
+      padding: 10px 14px;
+      color: var(--white);
+      font-family: var(--fb);
+      font-size: .85rem;
+      outline: none;
+      transition: border-color .3s
+    }
+
+    .nl-input input::placeholder {
+      color: var(--gray-d)
+    }
+
+    .nl-input input:focus {
+      border-color: var(--em)
+    }
+
+    .nl-input button {
+      padding: 10px 16px;
+      background: var(--em);
+      border: none;
+      border-radius: var(--r);
+      cursor: pointer;
+      transition: background .3s;
+      display: flex;
+      align-items: center
+    }
+
+    .nl-input button:hover {
+      background: var(--em-lt)
+    }
+
+    .nl-input button svg {
+      width: 16px;
+      height: 16px
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 48px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid var(--gl-b);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px
+    }
+
+    .footer-bottom p {
+      color: var(--gray-d);
+      font-size: .78rem
+    }
+
+    .footer-bottom .f-links {
+      display: flex;
+      gap: 20px
+    }
+
+    .footer-bottom .f-links a {
+      color: var(--gray-d);
+      font-size: .78rem;
+      transition: color .2s
+    }
+
+    .footer-bottom .f-links a:hover {
+      color: var(--em)
+    }
+
+    /* Mobile */
+    @media(max-width:1024px) {
+      .nav {
+        padding: 16px 28px
+      }
+
+      .nav.scrolled {
+        padding: 12px 28px
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background: rgba(7, 7, 7, .96);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        justify-content: center;
+        gap: 24px;
+        padding: 40px;
+        transition: right .35s cubic-bezier(.4, 0, .2, 1);
+        border-left: 1px solid var(--gl-b)
+      }
+
+      .nav-links.open {
+        right: 0
+      }
+
+      .hamburger {
+        display: flex
+      }
+
+      .page-hero {
+        padding: 140px 24px 60px
+      }
+
+      .legal-wrap {
+        padding: 0 24px 80px
+      }
+
+      .legal-card {
+        padding: 36px 32px
+      }
+
+      .footer {
+        padding: 48px 24px 24px
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px
+      }
+    }
+
+    @media(max-width:768px) {
+      .footer-grid {
+        grid-template-columns: 1fr
+      }
+
+      .legal-card {
+        padding: 28px 22px
+      }
+    }
+
+    @media(max-width:480px) {
+      .page-hero h1 {
+        font-size: 2rem
+      }
+
+      .legal-card {
+        padding: 24px 18px;
+        border-radius: var(--r)
+      }
+
+      .nl-input {
+        flex-direction: column
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Cursor -->
+  <div class="cur" id="cur"></div>
+  <div class="cur-d" id="curD"></div>
+
+  <!-- Blobs -->
+  <div class="bl bl-1"></div>
+  <div class="bl bl-2"></div>
+  <div class="bl bl-3"></div>
+
+  <!-- Nav -->
+  <nav class="nav" id="nav">
+    <a href="index.html" class="logo">Pocket<em>AI</em></a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#how">How It Works</a>
+      <a href="index.html#solutions">Solutions</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="pitch.html">Pitch</a>
+      <a href="index.html#get-started" class="btn btn-g btn-sm">Get Started</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <h1 class="rv"><span>Terms of Service</span></h1>
+    <p class="updated rv d1">Last Updated: March 1, 2026</p>
+  </section>
+
+  <!-- Legal Content -->
+  <div class="legal-wrap">
+    <div class="legal-card rv d2">
+
+      <h3>1. Acceptance of Terms</h3>
+      <p>Welcome to PocketAI. These Terms of Service ("Terms") govern your access to and use of the PocketAI mobile
+        application, website, APIs, and all related services (collectively, the "Service") provided by PocketAI
+        Technologies ("PocketAI," "we," "our," or "us").</p>
+      <p>By creating an account, downloading the application, or otherwise accessing or using the Service, you
+        acknowledge that you have read, understood, and agree to be bound by these Terms. If you do not agree to these
+        Terms, you must not access or use the Service.</p>
+      <p>If you are using the Service on behalf of an organization, you represent and warrant that you have the
+        authority to bind that organization to these Terms, and "you" shall refer to both you individually and the
+        organization.</p>
+
+      <h3>2. Description of Service</h3>
+      <p>PocketAI provides an on-device artificial intelligence assistant that runs directly on your mobile device. The
+        Service includes, but is not limited to:</p>
+      <ul>
+        <li><strong>On-Device AI Processing:</strong> Natural language understanding, text generation, summarization,
+          translation, and other AI capabilities executed locally on your device.</li>
+        <li><strong>Privacy-First Architecture:</strong> Core AI functionality that operates without transmitting your
+          data to external servers.</li>
+        <li><strong>Optional Cloud Features:</strong> Enhanced capabilities available through optional cloud
+          connectivity, including model updates, cross-device synchronization, and premium AI models.</li>
+        <li><strong>Developer SDK:</strong> Tools and APIs for integrating PocketAI capabilities into third-party
+          applications.</li>
+      </ul>
+      <p>We reserve the right to modify, suspend, or discontinue any aspect of the Service at any time, with or without
+        notice. We shall not be liable to you or any third party for any modification, suspension, or discontinuation of
+        the Service.</p>
+
+      <h3>3. User Accounts</h3>
+      <p>To access certain features of the Service, you must create an account. When creating your account, you agree
+        to:</p>
+      <ul>
+        <li>Provide accurate, current, and complete registration information</li>
+        <li>Maintain and promptly update your account information to keep it accurate and complete</li>
+        <li>Maintain the security and confidentiality of your login credentials</li>
+        <li>Accept responsibility for all activities that occur under your account</li>
+        <li>Notify us immediately of any unauthorized use of your account</li>
+      </ul>
+      <p>You must be at least 13 years of age (or the applicable age of digital consent in your jurisdiction) to create
+        an account and use the Service. We reserve the right to suspend or terminate accounts that violate these Terms
+        or that we reasonably believe to be fraudulent.</p>
+
+      <h3>4. Subscription & Payments</h3>
+      <p>PocketAI offers both free and premium tiers of service:</p>
+      <ul>
+        <li><strong>Free Tier:</strong> Provides access to core on-device AI features with standard model capabilities
+          at no charge.</li>
+        <li><strong>Premium Subscription:</strong> Available at <strong>$10.00 per month</strong> (or equivalent in your
+          local currency), the premium tier unlocks advanced AI models, priority support, cloud synchronization,
+          extended context windows, and additional features as described on our pricing page.</li>
+      </ul>
+      <p>By subscribing to the premium tier, you agree to the following payment terms:</p>
+      <ul>
+        <li>Subscriptions are billed on a recurring monthly basis and will automatically renew unless cancelled before
+          the end of the current billing period.</li>
+        <li>Payment is processed through our third-party payment provider. You authorize us to charge the payment method
+          on file for all applicable fees.</li>
+        <li>Prices are subject to change with 30 days' prior notice. Continued use of the Service after a price change
+          constitutes acceptance of the new pricing.</li>
+        <li>Refunds are handled on a case-by-case basis. If you are dissatisfied with the Service, please contact our
+          support team within 14 days of your initial subscription for a full refund.</li>
+        <li>You may cancel your subscription at any time through the app settings or by contacting support. Cancellation
+          takes effect at the end of the current billing period.</li>
+      </ul>
+
+      <h3>5. Intellectual Property</h3>
+      <p>The Service, including all software, AI models, algorithms, designs, text, graphics, logos, trademarks, and
+        other content provided by PocketAI, is the exclusive property of PocketAI Technologies and is protected by
+        international copyright, trademark, patent, and other intellectual property laws.</p>
+      <p>We grant you a limited, non-exclusive, non-transferable, revocable license to use the Service for personal or
+        internal business purposes in accordance with these Terms. This license does not include the right to:</p>
+      <ul>
+        <li>Modify, reverse engineer, decompile, or disassemble the Service or any component thereof</li>
+        <li>Copy, distribute, or create derivative works based on the Service</li>
+        <li>Remove, alter, or obscure any proprietary notices or labels on the Service</li>
+        <li>Use the Service for competitive analysis or to build a competing product</li>
+        <li>Extract or attempt to extract the AI models, weights, or training data</li>
+      </ul>
+
+      <h3>6. User Content</h3>
+      <p>You retain ownership of all content you create, input, or generate using the Service ("User Content"). Because
+        PocketAI processes data on-device by default, your User Content remains stored locally on your device under your
+        control.</p>
+      <p>If you enable optional cloud features, you grant PocketAI a limited, non-exclusive license to store and
+        transmit your encrypted User Content solely for the purpose of providing the cloud synchronization service. We
+        do not access, read, or analyze the content of your encrypted data.</p>
+      <p>You are solely responsible for your User Content and represent that you have all necessary rights to use it
+        with the Service. You agree not to use the Service to process content that is unlawful, harmful, threatening,
+        defamatory, or otherwise objectionable.</p>
+
+      <h3>7. Prohibited Uses</h3>
+      <p>You agree not to use the Service to:</p>
+      <ul>
+        <li>Violate any applicable local, national, or international law or regulation</li>
+        <li>Generate content that promotes violence, discrimination, or illegal activities</li>
+        <li>Attempt to gain unauthorized access to any part of the Service, other user accounts, or any systems or
+          networks connected to the Service</li>
+        <li>Interfere with or disrupt the integrity or performance of the Service</li>
+        <li>Transmit any malware, viruses, or other malicious code</li>
+        <li>Use automated means (bots, scrapers, etc.) to access the Service without our express written permission</li>
+        <li>Circumvent any technical measures we use to provide the Service</li>
+        <li>Use the Service to develop weapons, conduct surveillance, or engage in any activity that may cause harm to
+          individuals or groups</li>
+        <li>Resell, sublicense, or commercially exploit the Service without authorization</li>
+      </ul>
+      <p>Violation of these prohibitions may result in immediate suspension or termination of your account and may
+        subject you to legal liability.</p>
+
+      <h3>8. Disclaimers</h3>
+      <p>THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT WARRANTIES OF ANY KIND, WHETHER
+        EXPRESS, IMPLIED, OR STATUTORY. TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, POCKETAI DISCLAIMS ALL
+        WARRANTIES, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+        PURPOSE, NON-INFRINGEMENT, AND ACCURACY.</p>
+      <p>PocketAI does not warrant that:</p>
+      <ul>
+        <li>The Service will meet your specific requirements or expectations</li>
+        <li>The Service will be uninterrupted, timely, secure, or error-free</li>
+        <li>AI-generated outputs will be accurate, complete, reliable, or suitable for any particular purpose</li>
+        <li>Any defects in the Service will be corrected</li>
+      </ul>
+      <p>AI-generated content should not be relied upon as professional advice (medical, legal, financial, or
+        otherwise). You acknowledge that AI outputs may contain errors, biases, or inaccuracies and assume full
+        responsibility for how you use such outputs.</p>
+
+      <h3>9. Limitation of Liability</h3>
+      <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL POCKETAI TECHNOLOGIES, ITS DIRECTORS,
+        OFFICERS, EMPLOYEES, AGENTS, PARTNERS, OR AFFILIATES BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL,
+        CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER
+        INTANGIBLE LOSSES, ARISING OUT OF OR IN CONNECTION WITH:</p>
+      <ul>
+        <li>Your access to, use of, or inability to use the Service</li>
+        <li>Any conduct or content of any third party on the Service</li>
+        <li>Any content obtained from the Service</li>
+        <li>Unauthorized access, use, or alteration of your transmissions or content</li>
+      </ul>
+      <p>IN NO EVENT SHALL OUR TOTAL AGGREGATE LIABILITY EXCEED THE GREATER OF (A) THE AMOUNT YOU HAVE PAID TO POCKETAI
+        IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM, OR (B) ONE HUNDRED UNITED STATES DOLLARS ($100.00 USD).</p>
+
+      <h3>10. Governing Law</h3>
+      <p>These Terms shall be governed by and construed in accordance with the laws of the Kingdom of Morocco, without
+        regard to its conflict of law principles. Any disputes arising out of or relating to these Terms or the Service
+        shall be subject to the exclusive jurisdiction of the courts located in Casablanca, Morocco.</p>
+      <p>If any provision of these Terms is found to be unenforceable or invalid by a court of competent jurisdiction,
+        that provision shall be limited or eliminated to the minimum extent necessary so that these Terms shall
+        otherwise remain in full force and effect.</p>
+
+      <h3>11. Termination</h3>
+      <p>We may terminate or suspend your access to the Service immediately, without prior notice or liability, for any
+        reason, including but not limited to a breach of these Terms. Upon termination:</p>
+      <ul>
+        <li>Your license to use the Service will immediately cease</li>
+        <li>You must discontinue all use of the Service</li>
+        <li>Any data stored locally on your device will remain under your control</li>
+        <li>Any data stored on our servers in connection with your account may be deleted after a reasonable retention
+          period</li>
+        <li>Provisions of these Terms that by their nature should survive termination shall survive, including ownership
+          provisions, warranty disclaimers, and limitations of liability</li>
+      </ul>
+      <p>You may terminate your account at any time by deleting it through the app settings or by contacting our support
+        team. If you have an active premium subscription, please cancel it before deleting your account to avoid further
+        charges.</p>
+
+      <h3>12. Changes to Terms</h3>
+      <p>We reserve the right to modify these Terms at any time. When we make material changes, we will provide notice
+        through one or more of the following methods:</p>
+      <ul>
+        <li>Posting the updated Terms on our website with a revised "Last Updated" date</li>
+        <li>Displaying a prominent notice within the PocketAI application</li>
+        <li>Sending an email notification to the address associated with your account</li>
+      </ul>
+      <p>Your continued use of the Service after the effective date of any changes constitutes your acceptance of the
+        revised Terms. If you do not agree with the modified Terms, you must stop using the Service and terminate your
+        account.</p>
+
+      <h3>13. Contact Us</h3>
+      <p>If you have any questions, concerns, or feedback regarding these Terms of Service, please contact us:</p>
+      <ul>
+        <li><strong>Email:</strong> <a href="mailto:legal@pai-technology.com">legal@pai-technology.com</a></li>
+        <li><strong>Company:</strong> PocketAI Technologies</li>
+      </ul>
+      <p>We will make every reasonable effort to respond to your inquiries in a timely manner.</p>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">Pocket<em>AI</em></div>
+        <p>On-device AI that works everywhere. Private, fast, and always available.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+            </svg></a>
+          <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+            </svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+              <rect x="2" y="9" width="4" height="12" />
+              <circle cx="4" cy="4" r="2" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="index.html#features">Features</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="index.html#how">How It Works</a>
+        <a href="sdk.html">SDK</a>
+        <a href="changelog.html">Changelog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Solutions</h4>
+        <a href="individuals.html">For Individuals</a>
+        <a href="developers.html">For Developers</a>
+        <a href="enterprise.html">For Enterprise</a>
+        <a href="healthcare.html">Healthcare</a>
+        <a href="defense.html">Defense</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="careers.html">Careers</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Newsletter</h4>
+        <p style="color:var(--gray);font-size:.85rem;margin-bottom:12px">Stay updated with the latest from PocketAI.</p>
+        <div class="nl-input">
+          <input type="email" placeholder="Enter your email">
+          <button aria-label="Subscribe"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 PocketAI Technologies. All rights reserved.</p>
+      <div class="f-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="cookies.html">Cookie Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const C = document.getElementById('cur'), D = document.getElementById('curD'); let cx = 0, cy = 0, dx = 0, dy = 0;
+      document.addEventListener('mousemove', e => { dx = e.clientX; dy = e.clientY; D.style.left = dx + 'px'; D.style.top = dy + 'px' });
+      (function lp() { cx += (dx - cx) * .1; cy += (dy - cy) * .1; C.style.left = cx + 'px'; C.style.top = cy + 'px'; requestAnimationFrame(lp) })();
+      document.querySelectorAll('a,button,.btn').forEach(el => { el.addEventListener('mouseenter', () => C.classList.add('h')); el.addEventListener('mouseleave', () => C.classList.remove('h')) });
+      document.querySelectorAll('[data-tilt]').forEach(el => { el.addEventListener('mousemove', e => { const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height; el.style.transform = `perspective(900px) rotateX(${(y - .5) * -7}deg) rotateY(${(x - .5) * 7}deg) scale3d(1.01,1.01,1.01)`; el.style.setProperty('--mx', x * 100 + '%'); el.style.setProperty('--my', y * 100 + '%') }); el.addEventListener('mouseleave', () => { el.style.transform = '' }) });
+      document.querySelectorAll('.mag').forEach(w => { const b = w.querySelector('.btn'); w.addEventListener('mousemove', e => { const r = w.getBoundingClientRect(); b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .2}px,${(e.clientY - r.top - r.height / 2) * .2}px)` }); w.addEventListener('mouseleave', () => { b.style.transform = '' }) });
+      const rO = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis') }) }, { threshold: .08, rootMargin: '0px 0px -30px 0px' });
+      document.querySelectorAll('.rv').forEach(e => rO.observe(e));
+      window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 50));
+      const blobs = document.querySelectorAll('.bl'); let tk = false;
+      window.addEventListener('scroll', () => { if (!tk) { requestAnimationFrame(() => { const s = scrollY; blobs[0].style.transform = `translate(${Math.sin(s * .002) * 30}px,${s * -.1}px)`; blobs[1].style.transform = `translate(${Math.cos(s * .0015) * 20}px,${s * -.06}px)`; blobs[2].style.transform = `translate(${Math.sin(s * .001) * 15}px,${s * -.04}px)`; tk = false }); tk = true } });
+      document.querySelectorAll('a[href^="#"]').forEach(a => { a.addEventListener('click', e => { e.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }) }) });
+    })();
+    // Hamburger
+    document.getElementById('hamburger').addEventListener('click', function () { document.getElementById('navLinks').classList.toggle('open'); });
+  </script>
+</body>
+
+</html>
